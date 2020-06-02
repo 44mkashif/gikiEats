@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'GIKI Eats',
       theme: ThemeData(
         // This is the theme of your application.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
       ),
       home: new Home(),
     );
