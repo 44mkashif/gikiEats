@@ -11,10 +11,6 @@ class MyApp extends StatelessWidget {
       //To remove debug banner
       debugShowCheckedModeBanner: false, 
       title: 'GIKI Eats',
-      theme: ThemeData(
-        // This is the theme of your application.
-        primarySwatch: Colors.teal,
-      ),
       home: new Home(),
     );
   }
