@@ -57,6 +57,7 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       TextField(
                         decoration: InputDecoration(
+                          icon: Icon(Icons.person),
                           labelText: 'Full Name',
                         ),
                       ),
@@ -65,6 +66,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextField(
                         decoration: InputDecoration(
+                          icon: Icon(Icons.email),
                           labelText: 'GIKI Email',
                         ),
                       ),
@@ -73,6 +75,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextField(
                         decoration: InputDecoration(
+                          icon: Icon(Icons.phone),
                           labelText: 'Phone Number',
                         ),
                       ),
@@ -81,6 +84,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextField(
                         decoration: InputDecoration(
+                          icon: Icon(Icons.lock),
                           labelText: 'Password',
                         ),
                         obscureText: true,
