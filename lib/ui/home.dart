@@ -92,8 +92,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
-  signUpScreen(BuildContext context) {}
-
-  loginScreen() {}
 }
