@@ -9,9 +9,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //To remove debug banner
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false,
       title: 'GIKI Eats',
       home: new Home(),
+      theme: ThemeData(
+        primaryColor: Colors.teal,
+      ),
     );
   }
 }
