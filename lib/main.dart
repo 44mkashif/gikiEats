@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/ui/welcome.dart';
+import 'package:giki_eats/util/config.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'GIKI Eats',
       home: new WelcomePage(),
       theme: ThemeData(
-        primaryColor: Colors.teal,
+        primaryColor: teal,
       ),
     );
   }
