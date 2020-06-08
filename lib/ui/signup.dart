@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/util/config.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -12,13 +13,16 @@ class _SignUpState extends State<SignUp> {
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
+          // color: teal,
           gradient: LinearGradient(
             begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
-              Colors.teal[700],
-              Colors.teal[500],
-              Colors.teal[400],
-              Colors.teal[400],
+              Color.fromRGBO(0, 105, 92, 1),
+              Color.fromRGBO(0, 135, 121, 1),
+              Color.fromRGBO(81, 184, 160, 1),
+              Color.fromRGBO(178, 224, 187, 1),
+              Color.fromRGBO(253, 244, 179, 1),
             ],
           ),
         ),
@@ -26,14 +30,14 @@ class _SignUpState extends State<SignUp> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 80,
+              height: 60,
             ),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Text(
                 'Create Account',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: offwhite,
                   fontSize: 30.0,
                   fontWeight: FontWeight.w400,
                 ),
@@ -45,7 +49,7 @@ class _SignUpState extends State<SignUp> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey.shade100,
+                  color: offwhite,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
                     topRight: Radius.circular(60),
@@ -90,7 +94,7 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                       ),
                       SizedBox(
-                        height: 40,
+                        height: 60,
                       ),
                       Container(
                         height: 60.0,
@@ -98,19 +102,16 @@ class _SignUpState extends State<SignUp> {
                         child: RaisedButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
-                            // side: BorderSide(
-                            //   color: Colors.teal,
-                            // ),
                           ),
                           elevation: 7.0,
                           onPressed: () {
                             debugPrint('Account Created...');
                           },
-                          color: Colors.teal,
+                          color: teal,
                           child: Text(
                             "Create Account",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: offwhite,
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                             ),
@@ -146,7 +147,7 @@ class _SignUpState extends State<SignUp> {
                               child: Text(
                                 'Login',
                                 style: TextStyle(
-                                  color: Colors.teal,
+                                  color: teal,
                                   fontSize: 16,
                                 ),
                               ),
