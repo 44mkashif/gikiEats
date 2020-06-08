@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/ui/home.dart';
+import 'package:giki_eats/ui/welcome.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       //To remove debug banner
       debugShowCheckedModeBanner: false,
       title: 'GIKI Eats',
-      home: new Home(),
+      home: new WelcomePage(),
       theme: ThemeData(
         primaryColor: Colors.teal,
       ),
