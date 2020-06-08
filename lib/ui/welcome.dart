@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/ui/login.dart';
 import 'package:giki_eats/ui/signup.dart';
 import 'package:giki_eats/util/config.dart';
 
@@ -113,7 +114,13 @@ class WelcomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   elevation: 7.0,
-                  onPressed: () {},
+                  onPressed: () {
+                    var router = new MaterialPageRoute(
+                      builder: (BuildContext context) => new Login(),
+                    );
+
+                    Navigator.of(context).push(router);
+                  },
                   color: offwhite,
                   child: Text(
                     "Login",
