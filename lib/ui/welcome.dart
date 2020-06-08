@@ -20,7 +20,7 @@ class WelcomePage extends StatelessWidget {
               Colors.teal[300],
               Colors.teal[200],
               Colors.teal[100],
-              offwhite,
+              // offwhite,
               offwhite,
             ],
           ),
