@@ -63,8 +63,13 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.person),
+                          prefixIcon: Icon(Icons.person),
                           labelText: 'Full Name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -72,8 +77,13 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.email),
+                          prefixIcon: Icon(Icons.email),
                           labelText: 'GIKI Email',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -81,8 +91,13 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.phone),
+                          prefixIcon: Icon(Icons.phone),
                           labelText: 'Phone Number',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -90,8 +105,13 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.lock),
+                          prefixIcon: Icon(Icons.lock),
                           labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                         ),
                         obscureText: true,
                       ),

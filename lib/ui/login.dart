@@ -62,17 +62,27 @@ class _LoginState extends State<Login> {
                     children: <Widget>[
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.email),
+                          prefixIcon: Icon(Icons.email),
                           labelText: 'GIKI Email',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.lock),
+                          prefixIcon: Icon(Icons.lock),
                           labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                         ),
                         obscureText: true,
                       ),
