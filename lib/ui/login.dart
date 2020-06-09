@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/util/config.dart';
 
-import 'login.dart';
-
-class SignUp extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _SignUpState createState() => _SignUpState();
+  _LoginState createState() => _LoginState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +35,7 @@ class _SignUpState extends State<SignUp> {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Text(
-                'Create Account',
+                'Login',
                 style: TextStyle(
                   color: offwhite,
                   fontSize: 30.0,
@@ -63,26 +61,8 @@ class _SignUpState extends State<SignUp> {
                     children: <Widget>[
                       TextField(
                         decoration: InputDecoration(
-                          icon: Icon(Icons.person),
-                          labelText: 'Full Name',
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
                           icon: Icon(Icons.email),
                           labelText: 'GIKI Email',
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          icon: Icon(Icons.phone),
-                          labelText: 'Phone Number',
                         ),
                       ),
                       SizedBox(
@@ -107,11 +87,11 @@ class _SignUpState extends State<SignUp> {
                           ),
                           elevation: 7.0,
                           onPressed: () {
-                            debugPrint('Account Created...');
+                            debugPrint('Account Logged In...');
                           },
                           color: teal,
                           child: Text(
-                            "Create Account",
+                            "Login",
                             style: TextStyle(
                               color: offwhite,
                               fontSize: 20,
@@ -129,7 +109,7 @@ class _SignUpState extends State<SignUp> {
                           Container(
                             alignment: Alignment.center,
                             child: Text(
-                              'Already have an Account?',
+                              'Forgot Your Password?',
                               style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 15,
@@ -143,14 +123,11 @@ class _SignUpState extends State<SignUp> {
                             alignment: Alignment.center,
                             child: GestureDetector(
                               onTap: () {
-                                var router = new MaterialPageRoute(
-                                  builder: (BuildContext context) => new Login(),
-                                );
-
-                                Navigator.of(context).push(router);
+                                debugPrint(
+                                    'Forgot Password, Open Reset Password');
                               },
                               child: Text(
-                                'Login',
+                                'Reset Password',
                                 style: TextStyle(
                                   color: teal,
                                   fontSize: 16,
