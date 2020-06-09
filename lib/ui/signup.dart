@@ -96,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                         obscureText: true,
                       ),
                       SizedBox(
-                        height: 60,
+                        height: 50,
                       ),
                       Container(
                         height: 60.0,
@@ -123,7 +123,7 @@ class _SignUpState extends State<SignUp> {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
@@ -132,12 +132,12 @@ class _SignUpState extends State<SignUp> {
                               'Already have an Account?',
                               style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: 15,
+                                fontSize: 16,
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            height: 8,
                           ),
                           Container(
                             alignment: Alignment.center,
@@ -154,6 +154,7 @@ class _SignUpState extends State<SignUp> {
                                 style: TextStyle(
                                   color: teal,
                                   fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),

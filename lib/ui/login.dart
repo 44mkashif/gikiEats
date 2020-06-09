@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/ui/signup.dart';
 import 'package:giki_eats/util/config.dart';
 
 class Login extends StatefulWidget {
@@ -56,7 +57,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 10),
+                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
                   child: ListView(
                     children: <Widget>[
                       TextField(
@@ -76,7 +77,27 @@ class _LoginState extends State<Login> {
                         obscureText: true,
                       ),
                       SizedBox(
-                        height: 60,
+                        height: 25.0,
+                      ),
+                      Container(
+                        // padding: EdgeInsets.all(12.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            debugPrint('Reset Password');
+                          },
+                          child: Text(
+                            'Forgot Password?',
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              color: teal,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.0,
                       ),
                       Container(
                         height: 60.0,
@@ -101,36 +122,41 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
                             alignment: Alignment.center,
                             child: Text(
-                              'Forgot Your Password?',
+                              'Don\'t have an Account?',
                               style: TextStyle(
                                 color: Colors.grey[700],
-                                fontSize: 15,
+                                fontSize: 16,
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: 10,
+                            height: 10,
                           ),
                           Container(
                             alignment: Alignment.center,
                             child: GestureDetector(
                               onTap: () {
-                                debugPrint(
-                                    'Forgot Password, Open Reset Password');
+                                var router = new MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new SignUp(),
+                                );
+
+                                Navigator.of(context).push(router);
                               },
                               child: Text(
-                                'Reset Password',
+                                'Create Account',
                                 style: TextStyle(
                                   color: teal,
                                   fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
