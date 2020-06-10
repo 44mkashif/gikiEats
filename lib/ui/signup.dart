@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/common/loader.dart';
+import 'package:giki_eats/services/auth.dart';
 import 'package:giki_eats/util/config.dart';
 
 import 'login.dart';
@@ -9,9 +11,16 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _name, _email, _password, _phoneNumber;
+  final AuthService _auth = AuthService();
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading
+        ? Loading()
+        : Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -59,129 +68,157 @@ class _SignUpState extends State<SignUp> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 20, 30, 10),
-                  child: ListView(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          labelText: 'Full Name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(100),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          labelText: 'GIKI Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(100),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.phone),
-                          labelText: 'Phone Number',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(100),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(100),
-                            ),
-                          ),
-                        ),
-                        obscureText: true,
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Container(
-                        height: 60.0,
-                        width: double.infinity,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          elevation: 7.0,
-                          onPressed: () {
-                            debugPrint('Account Created...');
+                  child: Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: <Widget>[
+                        TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Name is required!';
+                            }
                           },
-                          color: teal,
-                          child: Text(
-                            "Create Account",
-                            style: TextStyle(
-                              color: offwhite,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Already have an Account?',
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                                fontSize: 16,
+                          onSaved: (input) => _name = input,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.person),
+                            labelText: 'Full Name',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 8,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Email is required!';
+                            }
+                          },
+                          onSaved: (input) => _email = input,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            labelText: 'GIKI Email',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
+                              ),
+                            ),
                           ),
-                          Container(
-                            alignment: Alignment.center,
-                            child: GestureDetector(
-                              onTap: () {
-                                var router = new MaterialPageRoute(
-                                  builder: (BuildContext context) => new Login(),
-                                );
-
-                                Navigator.of(context).push(router);
-                              },
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Phone Number is required!';
+                            }
+                          },
+                          onSaved: (input) => _phoneNumber = input,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.phone),
+                            labelText: 'Phone Number',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
+                              ),
+                            ),
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          validator: (input) {
+                                  if (input.length < 6) {
+                                    return "Password must be at least 6 characters long!";
+                                  }
+                                },
+                          onSaved: (input) => _password = input,
+                                obscureText: true,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.lock),
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Container(
+                          height: 60.0,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            elevation: 7.0,
+                            onPressed: signUp,
+                            color: teal,
+                            child: Text(
+                              "Create Account",
+                              style: TextStyle(
+                                color: offwhite,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.center,
                               child: Text(
-                                'Login',
+                                'Already have an Account?',
                                 style: TextStyle(
-                                  color: teal,
+                                  color: Colors.grey[700],
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              child: GestureDetector(
+                                onTap: () {
+                                  var router = new MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new Login(),
+                                  );
+
+                                  Navigator.of(context).pushReplacement(router);
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    color: teal,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -190,5 +227,21 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  void signUp() async {
+      if (_formKey.currentState.validate()) {
+        setState(() => loading = true);
+
+        _formKey.currentState.save();
+        dynamic result = await _auth.signUp(_name, _email, _phoneNumber, _password);
+
+         if (result == null) {
+           setState(() => loading = false);
+           print('Error Signing up..');
+         } else {
+           Navigator.pop(context);
+         }
+      }
   }
 }
