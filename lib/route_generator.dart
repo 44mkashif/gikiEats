@@ -4,6 +4,7 @@ import 'package:giki_eats/screens/login.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/screens/wrapper.dart';
+import 'package:giki_eats/utils/config.dart';
 
 import 'models/user.dart';
 
@@ -47,10 +48,35 @@ class RouteGenerator {
         appBar: AppBar(
           title: Text('GIKI Eats'),
         ),
-        body: Center(
-          child: Text(
-            'ERROR 404\nPage Not Found',
-            textAlign: TextAlign.center,
+        body: Container(
+          alignment: Alignment.center,
+          color: offwhite,
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'ERROR 404!',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 10,),
+              Text(
+              'Page Not Found',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            ],
           ),
         ),
       );
