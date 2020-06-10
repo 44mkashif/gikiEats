@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/ui/login.dart';
-import 'package:giki_eats/ui/signup.dart';
-import 'package:giki_eats/util/config.dart';
+import 'package:giki_eats/utils/config.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -115,11 +113,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   elevation: 7.0,
                   onPressed: () {
-                    var router = new MaterialPageRoute(
-                      builder: (BuildContext context) => new Login(),
-                    );
-
-                    Navigator.of(context).push(router);
+                    Navigator.of(context).pushNamed('/login');
                   },
                   color: offwhite,
                   child: Text(
@@ -145,11 +139,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   elevation: 7.0,
                   onPressed: () {
-                    var router = new MaterialPageRoute(
-                      builder: (BuildContext context) => new SignUp(),
-                    );
-
-                    Navigator.of(context).push(router);
+                    Navigator.of(context).pushNamed('/signup');
                   },
                   color: teal,
                   child: Text(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/user.dart';
+import 'package:giki_eats/route_generator.dart';
 import 'package:giki_eats/services/auth.dart';
-import 'package:giki_eats/ui/wrapper.dart';
-import 'package:giki_eats/util/config.dart';
+import 'package:giki_eats/utils/config.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         //To remove debug banner
         debugShowCheckedModeBanner: false,
         title: 'GIKI Eats',
-        home: new Wrapper(),
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(
           primaryColor: teal,
         ),
