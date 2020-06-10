@@ -19,23 +19,66 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text('GIKI Eats'),
+        centerTitle: true,
         backgroundColor: teal,
       ),
       body: new Container(
-          alignment: Alignment.center,
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Text('Home'),
+        alignment: Alignment.center,
+        child: Container(
+          child: Text('Home'),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text('${widget.user.name}'),
+              accountEmail: Text('${widget.user.email}'),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: offwhite,
+                child: Text(
+                  "A",
+                  style: TextStyle(
+                    fontSize: 40.0,
+                    color: teal
+                  ),
+                ),
               ),
-              RaisedButton(
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-                child: Text('Logout'),
-              ),
-            ],
-          )),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Logout'),
+              onTap: () async {
+                await _auth.signOut();
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
