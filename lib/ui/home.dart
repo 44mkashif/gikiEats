@@ -44,6 +44,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+              decoration: BoxDecoration(
+                color: teal
+              ),
             ),
             ListTile(
               leading: Icon(Icons.home),
@@ -53,6 +56,12 @@ class _HomeState extends State<Home> {
                 // ...
               },
             ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+              indent: 20,
+              endIndent: 20,
+            ),
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
@@ -61,6 +70,26 @@ class _HomeState extends State<Home> {
                 // ...
               },
             ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+              indent: 20,
+              endIndent: 20,
+            ),
+            ListTile(
+              leading: Icon(Icons.shopping_cart),
+              title: Text('My Orders'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+              indent: 20,
+              endIndent: 20,
+            ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
@@ -68,6 +97,12 @@ class _HomeState extends State<Home> {
                 // Update the state of the app.
                 // ...
               },
+            ),
+            Divider(
+              height: 1,
+              color: Colors.grey,
+              indent: 20,
+              endIndent: 20,
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app),
