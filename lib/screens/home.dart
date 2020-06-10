@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
-import 'package:giki_eats/util/config.dart';
+import 'package:giki_eats/utils/config.dart';
 
 class Home extends StatefulWidget {
   final User user;
