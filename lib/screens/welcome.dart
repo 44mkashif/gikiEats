@@ -117,7 +117,7 @@ class WelcomePage extends StatelessWidget {
                   },
                   color: offwhite,
                   child: Text(
-                    "Login",
+                    "Student",
                     style: TextStyle(
                       color: teal,
                       fontSize: 20,
@@ -139,11 +139,11 @@ class WelcomePage extends StatelessWidget {
                   ),
                   elevation: 7.0,
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/signup');
+                    Navigator.of(context).pushNamed('/restLogin');
                   },
                   color: teal,
                   child: Text(
-                    "Create Account",
+                    "Restaurant",
                     style: TextStyle(
                       color: offwhite,
                       fontSize: 20,
