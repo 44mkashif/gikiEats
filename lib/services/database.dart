@@ -13,4 +13,19 @@
        return e.message;
      }
    }
+
+   Future<User> getUser(String emaill) async {
+     try{
+       return _usersCollectionReference.where('email', isEqualTo: emaill).getDocuments().then((QuerySnapshot docs) {
+         if(docs.documents.isNotEmpty){
+           var doc = docs.documents[0].data;
+           User user = new User(doc['id'], doc['name'], doc['email'], doc['phoneNumber']);
+           user.role = doc['role'];
+           return user;
+         }
+       });
+     } catch (e) {
+       return e.message;
+     }
+   }
  }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/screens/home.dart';
+import 'package:giki_eats/screens/customerScreens/customerhome.dart';
 import 'package:giki_eats/screens/login.dart';
-import 'package:giki_eats/screens/restLogin.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/screens/wrapper.dart';
 import 'package:giki_eats/utils/config.dart';
 
 import 'models/user.dart';
+import 'screens/restaurantScreens/resthome.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -21,10 +21,20 @@ class RouteGenerator {
       case '/welcome':
         return MaterialPageRoute(builder: (_) => WelcomePage());
 
-      case '/home':
+      case '/customerHome':
         if (args is User) {
           return MaterialPageRoute(
-            builder: (context) => Home(
+            builder: (context) => CustomerHome(
+              user: args,
+            ),
+          );
+        }
+        return _errorRoute();
+
+      case '/restHome':
+        if (args is User) {
+          return MaterialPageRoute(
+            builder: (context) => RestaurantHome(
               user: args,
             ),
           );
@@ -36,9 +46,6 @@ class RouteGenerator {
 
       case '/signup':
         return MaterialPageRoute(builder: (_) => SignUp());
-
-      case '/restLogin':
-        return MaterialPageRoute(builder: (_) => AdminSignIn());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

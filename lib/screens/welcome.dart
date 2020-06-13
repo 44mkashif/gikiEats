@@ -63,7 +63,7 @@ class WelcomePage extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 0.0),
+              padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
               child: Text(
                 'GIKI Eats',
                 textAlign: TextAlign.center,
@@ -74,24 +74,24 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              alignment: Alignment.topCenter,
-              padding: EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
-              child: Text(
-                'Are You Hungry?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: offwhite,
-                  fontSize: 26.0,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.topCenter,
+            //   padding: EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
+            //   child: Text(
+            //     'Are You Hungry?',
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //       color: offwhite,
+            //       fontSize: 26.0,
+            //       fontWeight: FontWeight.w400,
+            //     ),
+            //   ),
+            // ),
             Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.fromLTRB(0.0, 190.0, 0.0, 0.0),
               child: Text(
-                'ORDER NOW!',
+                'Click. Click. Eat.',
                 //Our App will make your food ordering experience pleasant and fast.
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -117,7 +117,7 @@ class WelcomePage extends StatelessWidget {
                   },
                   color: offwhite,
                   child: Text(
-                    "Student",
+                    "Login",
                     style: TextStyle(
                       color: teal,
                       fontSize: 20,
@@ -139,11 +139,11 @@ class WelcomePage extends StatelessWidget {
                   ),
                   elevation: 7.0,
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/restLogin');
+                    Navigator.of(context).pushNamed('/signup');
                   },
                   color: teal,
                   child: Text(
-                    "Restaurant",
+                    "Create Account",
                     style: TextStyle(
                       color: offwhite,
                       fontSize: 20,

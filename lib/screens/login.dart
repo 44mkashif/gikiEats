@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/services/auth.dart';
 import 'package:giki_eats/utils/config.dart';
@@ -13,6 +14,7 @@ class _LoginState extends State<Login> {
   String _email, _password;
   final AuthService _auth = AuthService();
   bool loading = false;
+  bool authError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +112,23 @@ class _LoginState extends State<Login> {
                                 obscureText: true,
                               ),
                               SizedBox(
-                                height: 25.0,
+                                height: 10.0,
+                              ),
+                              Visibility(
+                                // padding: EdgeInsets.all(12.0),
+                                  visible: authError,
+                                  child: Text(
+                                    'Email or Password is Incorrect',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                              ),
+                              SizedBox(
+                                height: 15.0,
                               ),
                               Container(
                                 // padding: EdgeInsets.all(12.0),
@@ -129,6 +147,7 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               ),
+                            
                               SizedBox(
                                 height: 30.0,
                               ),
@@ -209,6 +228,7 @@ class _LoginState extends State<Login> {
       dynamic result = await _auth.logIn(_email, _password);
 
       if (result == null) {
+        authError = true;
         setState(() => loading = false);
         print('Error Signing in..');
       } else {
