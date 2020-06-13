@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
                                 },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.email),
-                                  labelText: 'GIKI Email',
+                                  labelText: 'Email',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(100),

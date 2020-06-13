@@ -3,28 +3,51 @@ import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/screens/customerScreens/customerhome.dart';
 import 'package:giki_eats/screens/restaurantScreens/resthome.dart';
 import 'package:giki_eats/screens/welcome.dart';
+import 'package:giki_eats/services/database.dart';
+import 'package:giki_eats/utils/loader.dart';
 import 'package:provider/provider.dart';
-import 'package:giki_eats/services/auth.dart';
 
-class Wrapper extends StatelessWidget {
-  final AuthService _auth = AuthService();
+class Wrapper extends StatefulWidget {
   @override
-  Widget build(BuildContext context){
-    
-    final user = Provider.of<User>(context);
-    print(user);
-    if(user == null){
+  _WrapperState createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
+  final DatabaseService _db = DatabaseService();
+  bool loading = true;
+  bool customer = false;
+  bool restaurant = false;
+  @override
+  Widget build(BuildContext context) {
+    User user = Provider.of<User>(context);
+    if (user == null) {
       return WelcomePage();
-    }
-    else {
-      User user2 = _auth.getUser(user.email);
-      print(user2.toJson());
-      if (user2.role == 'customer'){
-        return CustomerHome(user: user2);
+    } else {
+      Future<User> userFromDb = _db.getUser(user.email);
+      if (userFromDb != null) {
+        userFromDb.then(
+          (userFromDb) {
+            setState(() {
+              user = userFromDb;
+              loading = false;
+              if (userFromDb.role == 'customer') {
+                customer = true;
+                restaurant = false;
+              } else if(user.role == 'restaurant') {
+                customer = false;
+                restaurant = true;
+              }
+            });
+          },
+        );
       }
-      else{
-       return RestaurantHome(user: user2);
-     }
+      if (loading) {
+        return Loading();
+      } else if(customer) {
+        return CustomerHome(user: user);
+      } else if(restaurant) {
+        return RestaurantHome(user: user);
+      }
     }
   }
 }
