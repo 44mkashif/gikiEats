@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/screens/customerScreens/customerhome.dart';
+import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/login.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
@@ -7,7 +7,7 @@ import 'package:giki_eats/screens/wrapper.dart';
 import 'package:giki_eats/utils/config.dart';
 
 import 'models/user.dart';
-import 'screens/restaurantScreens/resthome.dart';
+import 'screens/restaurantScreens/rest_home.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {

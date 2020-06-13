@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/user.dart';
-import 'package:giki_eats/screens/customerScreens/customerhome.dart';
-import 'package:giki_eats/screens/restaurantScreens/resthome.dart';
+import 'package:giki_eats/screens/customerScreens/customer_home.dart';
+import 'package:giki_eats/screens/restaurantScreens/rest_home.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/loader.dart';
