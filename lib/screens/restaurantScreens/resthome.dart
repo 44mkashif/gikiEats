@@ -3,15 +3,15 @@ import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
 import 'package:giki_eats/utils/config.dart';
 
-class Home extends StatefulWidget {
+class RestaurantHome extends StatefulWidget {
   final User user;
 
-  const Home({Key key, this.user}) : super(key: key);
+  const RestaurantHome({Key key, this.user}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<RestaurantHome> {
   final AuthService _auth = AuthService();
 
   @override
@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
       body: new Container(
         alignment: Alignment.center,
         child: Container(
-          child: Text('Home'),
+          child: Text('Restaurant Home'),
         ),
       ),
       drawer: Drawer(

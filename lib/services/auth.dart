@@ -21,6 +21,15 @@ class AuthService {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser); //.map((FirebaseUser user) => _userFromFirebaseUser(user));
   }
 
+  User getUser(String email) {
+    Future<User> user = _databaseService.getUser(email);
+    user.then((User user) {
+      print('userInAuth ${user.toJson()}');
+      return user;
+    });
+    return null;
+  }
+
   //Login
   Future<User> logIn(String email, String password) async {
     try {

@@ -95,6 +95,11 @@ class _SignUpState extends State<SignUp> {
                                   if (input.isEmpty) {
                                     return 'Email is required!';
                                   }
+                                  Pattern pattern = r'[a-zA-Z0-9._-]+@giki.edu.pk';
+                                  RegExp regex = new RegExp(pattern);
+                                  if (!regex.hasMatch(input)) {
+                                    return 'Email is Incorrect. Use your GIKI email address';
+                                  }
                                 },
                                 onSaved: (input) => _email = input,
                                 decoration: InputDecoration(

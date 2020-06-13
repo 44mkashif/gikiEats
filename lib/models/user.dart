@@ -17,6 +17,7 @@ class User {
      role = snapshot.data['role'];
    }
 
+
    Map<String, dynamic> toJson() {
      return {
        'id': id,
