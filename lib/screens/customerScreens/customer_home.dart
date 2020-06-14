@@ -13,7 +13,6 @@ class CustomerHome extends StatefulWidget {
 
 class _HomeState extends State<CustomerHome> {
   final AuthService _auth = AuthService();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,15 +37,10 @@ class _HomeState extends State<CustomerHome> {
                 backgroundColor: offwhite,
                 child: Text(
                   "A",
-                  style: TextStyle(
-                    fontSize: 40.0,
-                    color: teal
-                  ),
+                  style: TextStyle(fontSize: 40.0, color: teal),
                 ),
               ),
-              decoration: BoxDecoration(
-                color: teal
-              ),
+              decoration: BoxDecoration(color: teal),
             ),
             ListTile(
               leading: Icon(Icons.home),

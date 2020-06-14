@@ -13,7 +13,7 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  final DatabaseService _db = DatabaseService();
+  
   bool loading = true;
   bool customer = false;
   bool restaurant = false;
@@ -23,31 +23,21 @@ class _WrapperState extends State<Wrapper> {
     if (user == null) {
       return WelcomePage();
     } else {
-      Future<User> userFromDb = _db.getUser(user.email);
-      if (userFromDb != null) {
-        userFromDb.then(
-          (userFromDb) {
-            setState(() {
-              user = userFromDb;
-              loading = false;
-              if (userFromDb.role == 'customer') {
-                customer = true;
-                restaurant = false;
-              } else if(user.role == 'restaurant') {
-                customer = false;
-                restaurant = true;
-              }
-            });
-          },
-        );
-      }
-      if (loading) {
-        return Loading();
-      } else if(customer) {
-        return CustomerHome(user: user);
-      } else if(restaurant) {
-        return RestaurantHome(user: user);
-      }
+      final DatabaseService _db = DatabaseService(id: user.id);
+      return StreamBuilder<User>(
+        stream: _db.userData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if(snapshot.data.role == 'customer'){
+              return CustomerHome(user: snapshot.data,);
+            } else if(snapshot.data.role == 'restaurant') {
+              return RestaurantHome(user: snapshot.data,);
+            }
+          } else {
+            return Loading();
+          }
+        },
+      );
     }
   }
 }
