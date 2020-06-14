@@ -63,30 +63,9 @@ class WelcomePage extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
-              child: Text(
-                'GIKI Eats',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: offwhite,
-                  fontSize: 44.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
+              child: Image.asset('images/gikieats_white.png'),
             ),
-            // Container(
-            //   alignment: Alignment.topCenter,
-            //   padding: EdgeInsets.fromLTRB(0.0, 140.0, 0.0, 0.0),
-            //   child: Text(
-            //     'Are You Hungry?',
-            //     textAlign: TextAlign.center,
-            //     style: TextStyle(
-            //       color: offwhite,
-            //       fontSize: 26.0,
-            //       fontWeight: FontWeight.w400,
-            //     ),
-            //   ),
-            // ),
             Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.fromLTRB(0.0, 190.0, 0.0, 0.0),
