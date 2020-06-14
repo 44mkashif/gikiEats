@@ -25,36 +25,6 @@ class DatabaseService {
     return _restaurantsCollectionReference;
   }
 
-  // Stream<Restaurant> get restaurantData {
-  //   return _restaurantsCollectionReference
-  //       .where("admin", isEqualTo: id)
-  //       .document()
-  //       .snapshots()
-  //       .map(_restaurantfromSnapshot);
-  // }
-
-  // Restaurant _restaurantfromSnapshot(DocumentSnapshot event) {
-  //   Restaurant restaurant = Restaurant(
-  //     event.data['id'],
-  //     event.data['name'],
-  //     event.data['description'],
-  //     event.data['phoneNumber'],
-  //     event.data['admin'],
-  //     event.data['admin2']
-  //   );
-  //   return restaurant;
-  // }
-
-  // Future<Restaurant> getRestaurant() async{
-  //   return _restaurantsCollectionReference
-  //   .where('admin', isEqualTo: id)
-  //   .getDocuments()
-  //   .then((value) {
-  //     return Restaurant(value.documents[0].data['id'], value.documents[0].data['name'], value.documents[0].data['description'],
-  //     value.documents[0].data['phoneNumber'],value.documents[0].data['admin'], value.documents[0].data['admin2']);
-  //   });
-  // }
-
   Stream<User> get userData {
     return _usersCollectionReference
         .document(id)
