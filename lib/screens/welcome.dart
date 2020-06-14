@@ -62,6 +62,7 @@ class WelcomePage extends StatelessWidget {
               ),
             ),
             Container(
+              height: 180,
               alignment: Alignment.topCenter,
               padding: EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
               child: Image.asset('images/gikieats_white.png'),

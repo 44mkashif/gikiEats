@@ -21,10 +21,36 @@ class _HomeState extends State<CustomerHome> {
         centerTitle: true,
         backgroundColor: teal,
       ),
+      backgroundColor: offwhite,
       body: new Container(
         alignment: Alignment.center,
-        child: Container(
-          child: Text('Customer Home'),
+        child: ListView(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                alignment: Alignment.center,
+                height: 45,
+                child: TextField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.search,
+                      size: 25,
+                    ),
+                    hintText: 'Find food and restaurants...',
+                    contentPadding: EdgeInsets.all(6),
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            
+          ],
         ),
       ),
       drawer: Drawer(
