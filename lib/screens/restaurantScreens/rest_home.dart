@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/menu_item.dart';
+import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
 import 'package:giki_eats/utils/config.dart';
+import 'package:giki_eats/services/database.dart';
+import 'package:giki_eats/utils/variables.dart';
 
 class RestaurantHome extends StatefulWidget {
   final User user;
@@ -13,6 +17,7 @@ class RestaurantHome extends StatefulWidget {
 
 class _HomeState extends State<RestaurantHome> {
   final AuthService _auth = AuthService();
+  final DatabaseService _db = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +27,34 @@ class _HomeState extends State<RestaurantHome> {
         centerTitle: true,
         backgroundColor: teal,
       ),
-      body: new Container(
-        alignment: Alignment.center,
-        child: Container(
-          child: Text('Restaurant Home'),
-        ),
+      body: StreamBuilder (
+        stream: _db.getRestaurantInstance().where('admin', arrayContains: widget.user.id).snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Text('Loading Data.. Please Wait..');
+          restaurant = Restaurant(snapshot.data.documents[0]['id'], snapshot.data.documents[0]['name'], snapshot.data.documents[0]['description'], snapshot.data.documents[0]['phoneNumber']);
+
+          return StreamBuilder(
+            stream: _db.getRestaurantInstance().document(restaurant.id).collection("menu").snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Text('Loading Data.. Please Wait..');
+                menu = [MenuItem(snapshot.data.documents[0]['id'], snapshot.data.documents[0]['name'], snapshot.data.documents[0]['price'], snapshot.data.documents[0]['category'])];
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                //restaurant contains the restaurant of which it is admin. Use it to create homescreen
+                                                //menu list contains all the menu items of this restaurant
+                                                //They both are global variables stored in variables.dart
+                  children: <Widget>[
+                    Text(restaurant.name, textAlign: TextAlign.center),
+                    Text(restaurant.description, textAlign: TextAlign.center),
+                    Text(restaurant.phoneNumber, textAlign: TextAlign.center),
+                    Text(menu[0].name, textAlign: TextAlign.center),
+                  ],
+                );
+            }         
+            
+          );
+        },
       ),
       drawer: Drawer(
         child: ListView(

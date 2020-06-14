@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 
 class DatabaseService {
@@ -9,6 +10,9 @@ class DatabaseService {
   final CollectionReference _usersCollectionReference =
       Firestore.instance.collection("users");
 
+  final CollectionReference _restaurantsCollectionReference = 
+      Firestore.instance.collection("restaurants");    
+
   Future createUser(User user) async {
     try {
       await _usersCollectionReference.document(user.id).setData(user.toJson());
@@ -17,27 +21,38 @@ class DatabaseService {
     }
   }
 
-  // Future<User> getUser(String id) async {
-  //   try {
-  //     return _usersCollectionReference
-  //         .where('id', isEqualTo: id)
-  //         .getDocuments()
-  //         .then((QuerySnapshot docs) {
-  //       if (docs.documents.isNotEmpty) {
-  //         var doc = docs.documents[0].data;
-  //         User user = new User(
-  //           doc['id'],
-  //           doc['name'],
-  //           doc['email'],
-  //           doc['phoneNumber'],
-  //         );
-  //         user.role = doc['role'];
-  //         return user;
-  //       }
-  //     });
-  //   } catch (e) {
-  //     return e.message;
-  //   }
+  CollectionReference getRestaurantInstance(){
+    return _restaurantsCollectionReference;
+  }
+
+  // Stream<Restaurant> get restaurantData {
+  //   return _restaurantsCollectionReference
+  //       .where("admin", isEqualTo: id)
+  //       .document()
+  //       .snapshots()
+  //       .map(_restaurantfromSnapshot);
+  // }
+
+  // Restaurant _restaurantfromSnapshot(DocumentSnapshot event) {
+  //   Restaurant restaurant = Restaurant(
+  //     event.data['id'],
+  //     event.data['name'],
+  //     event.data['description'],
+  //     event.data['phoneNumber'],
+  //     event.data['admin'],
+  //     event.data['admin2']
+  //   );
+  //   return restaurant;
+  // }
+
+  // Future<Restaurant> getRestaurant() async{
+  //   return _restaurantsCollectionReference
+  //   .where('admin', isEqualTo: id)
+  //   .getDocuments()
+  //   .then((value) {
+  //     return Restaurant(value.documents[0].data['id'], value.documents[0].data['name'], value.documents[0].data['description'],
+  //     value.documents[0].data['phoneNumber'],value.documents[0].data['admin'], value.documents[0].data['admin2']);
+  //   });
   // }
 
   Stream<User> get userData {
