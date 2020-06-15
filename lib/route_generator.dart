@@ -4,7 +4,7 @@ import 'package:giki_eats/screens/login.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/screens/wrapper.dart';
-import 'package:giki_eats/utils/config.dart';
+import 'package:giki_eats/utils/colors.dart';
 
 import 'models/user.dart';
 import 'screens/restaurantScreens/rest_home.dart';

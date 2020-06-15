@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
-import 'package:giki_eats/utils/config.dart';
+import 'package:giki_eats/utils/colors.dart';
+import 'package:giki_eats/utils/loader.dart';
+import 'package:giki_eats/utils/variables.dart';
 
 class CustomerHome extends StatefulWidget {
   final User user;
@@ -13,6 +16,12 @@ class CustomerHome extends StatefulWidget {
 
 class _HomeState extends State<CustomerHome> {
   final AuthService _auth = AuthService();
+  //TODO: fetch restaurants from db
+  List<Map<String, String>> restaurants = [
+    {'name': 'Ayan Garden', 'image': 'images/desi_food.jpg'},
+    {'name': 'Raju Hotel', 'image': 'images/fast_food.png'},
+    {'name': 'Hot n Spicy', 'image': 'images/chinese_food.jpg'},
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +30,7 @@ class _HomeState extends State<CustomerHome> {
         centerTitle: true,
         backgroundColor: teal,
       ),
-      backgroundColor: offwhite,
+      backgroundColor: white,
       body: new Container(
         alignment: Alignment.center,
         child: ListView(
@@ -49,7 +58,179 @@ class _HomeState extends State<CustomerHome> {
                 ),
               ),
             ),
-            
+            SizedBox(
+              height: 5,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+              child: Container(
+                height: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                        child: Stack(
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Stack(
+                                children: <Widget>[
+                                  Positioned.fill(
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Loading(),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Image.asset(
+                                      categories[index]['image'],
+                                      fit: BoxFit.cover,
+                                      height: 150,
+                                      width: 230,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 160,
+                              width: 230,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                // color: Colors.black.withOpacity(0.4),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.6),
+                                    Colors.black.withOpacity(0.5),
+                                    Colors.black.withOpacity(0.5),
+                                    Colors.black.withOpacity(0.4),
+                                    Colors.black.withOpacity(0.1),
+                                    Colors.black.withOpacity(0.1),
+                                    Colors.black.withOpacity(0.025),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  categories[index]['name'],
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      onTap: () {
+                        print('Category item clicked');
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Restaurants',
+                    style: TextStyle(
+                      color: grey,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                    child: Column(
+                      children: <Widget>[
+                        for (var restaurant in restaurants)
+                          GestureDetector(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: Stack(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Positioned.fill(
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Loading(),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: Image.asset(
+                                            restaurant['image'],
+                                            fit: BoxFit.cover,
+                                            height: 260,
+                                            // width: 400,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 260,
+                                    // width: 230,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      // color: Colors.black.withOpacity(0.4),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                        colors: [
+                                          Colors.black.withOpacity(0.6),
+                                          Colors.black.withOpacity(0.5),
+                                          Colors.black.withOpacity(0.5),
+                                          Colors.black.withOpacity(0.4),
+                                          Colors.black.withOpacity(0.1),
+                                          Colors.black.withOpacity(0.1),
+                                          Colors.black.withOpacity(0.025),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned.fill(
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        restaurant['name'],
+                                        style: TextStyle(
+                                          color: white,
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              print('Restaurant clicked');
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

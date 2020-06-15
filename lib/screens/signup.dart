@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/services/auth.dart';
-import 'package:giki_eats/utils/config.dart';
+import 'package:giki_eats/utils/colors.dart';
 
 class SignUp extends StatefulWidget {
   @override

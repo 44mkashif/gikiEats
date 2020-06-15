@@ -67,6 +67,9 @@ flutter:
    - images/food51.png
    - images/gikieats_white.png
    - images/gikieats_teal.png
+   - images/desi_food.jpg
+   - images/fast_food.png
+   - images/chinese_food.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
