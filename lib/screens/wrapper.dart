@@ -23,7 +23,7 @@ class _WrapperState extends State<Wrapper> {
     if (user == null) {
       return WelcomePage();
     } else {
-      final DatabaseService _db = DatabaseService(id: user.id);
+      final DatabaseService _db = DatabaseService(userId: user.id);
       return StreamBuilder<User>(
         stream: _db.userData,
         builder: (context, snapshot) {

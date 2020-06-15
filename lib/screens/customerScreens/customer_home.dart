@@ -16,7 +16,7 @@ class CustomerHome extends StatefulWidget {
 
 class _HomeState extends State<CustomerHome> {
   final AuthService _auth = AuthService();
-  //TODO: fetch restaurants from db
+  //Todo fetch restaurants from db
   List<Map<String, String>> restaurants = [
     {'name': 'Ayan Garden', 'image': 'images/desi_food.jpg'},
     {'name': 'Raju Hotel', 'image': 'images/fast_food.png'},
