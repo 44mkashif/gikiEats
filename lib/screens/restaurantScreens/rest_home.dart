@@ -3,7 +3,7 @@ import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
-import 'package:giki_eats/utils/config.dart';
+import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/variables.dart';
 

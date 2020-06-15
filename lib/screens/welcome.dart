@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/utils/config.dart';
+import 'package:giki_eats/utils/colors.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
