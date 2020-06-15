@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 
 class DatabaseService {
@@ -9,6 +10,9 @@ class DatabaseService {
   final CollectionReference _usersCollectionReference =
       Firestore.instance.collection("users");
 
+  final CollectionReference _restaurantsCollectionReference = 
+      Firestore.instance.collection("restaurants");    
+
   Future createUser(User user) async {
     try {
       await _usersCollectionReference.document(user.id).setData(user.toJson());
@@ -17,28 +21,9 @@ class DatabaseService {
     }
   }
 
-  // Future<User> getUser(String id) async {
-  //   try {
-  //     return _usersCollectionReference
-  //         .where('id', isEqualTo: id)
-  //         .getDocuments()
-  //         .then((QuerySnapshot docs) {
-  //       if (docs.documents.isNotEmpty) {
-  //         var doc = docs.documents[0].data;
-  //         User user = new User(
-  //           doc['id'],
-  //           doc['name'],
-  //           doc['email'],
-  //           doc['phoneNumber'],
-  //         );
-  //         user.role = doc['role'];
-  //         return user;
-  //       }
-  //     });
-  //   } catch (e) {
-  //     return e.message;
-  //   }
-  // }
+  CollectionReference getRestaurantInstance(){
+    return _restaurantsCollectionReference;
+  }
 
   Stream<User> get userData {
     return _usersCollectionReference
