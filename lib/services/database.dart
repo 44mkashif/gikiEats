@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giki_eats/models/menu_item.dart';
+import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 
@@ -15,12 +16,22 @@ class DatabaseService {
   final CollectionReference _restaurantsCollectionReference =
       Firestore.instance.collection("restaurants");
 
+  final CollectionReference _ordersCollectionReference =
+      Firestore.instance.collection("orders");    
+
   Future createUser(User user) async {
     try {
       await _usersCollectionReference.document(user.id).setData(user.toJson());
     } catch (e) {
       return e.message;
     }
+  }
+
+  Stream<Order> get ordersDataForRestaurants {
+      return _ordersCollectionReference
+        .where('restaurantID', isEqualTo: restaurantId)
+        .snapshots()
+        .map(_orderItemFromSnapshot);
   }
 
   Stream<User> get userData {
@@ -72,6 +83,19 @@ class DatabaseService {
       snapshot.documents[0].data['name'],
       snapshot.documents[0].data['price'],
       snapshot.documents[0].data['category'],
+    );
+  }
+
+  Order _orderItemFromSnapshot(QuerySnapshot snapshot) {
+    return Order(
+      snapshot.documents[0].data['id'],
+      snapshot.documents[0].data['restaurantID'],
+      snapshot.documents[0].data['userID'],
+      snapshot.documents[0].data['status'],
+      snapshot.documents[0].data['orderedOn'],
+      snapshot.documents[0].data['acceptedOn'],
+      List.from(snapshot.documents[0].data['menuIDs']),
+      List.from(snapshot.documents[0].data['menuQty']),
     );
   }
 }

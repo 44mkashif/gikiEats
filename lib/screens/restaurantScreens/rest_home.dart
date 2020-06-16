@@ -18,14 +18,14 @@ class RestaurantHome extends StatefulWidget {
 
 class _HomeState extends State<RestaurantHome> {
   final AuthService _auth = AuthService();
-  
+  String titleText = 'GIKI Eats';
 
   @override
   Widget build(BuildContext context) {
     DatabaseService _db = DatabaseService(userId: widget.user.id);
     return Scaffold(
       appBar: AppBar(
-        title: Text('GIKI Eats'),
+        title: Text(titleText),
         centerTitle: true,
         backgroundColor: teal,
       ),
@@ -34,6 +34,7 @@ class _HomeState extends State<RestaurantHome> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             restaurant = snapshot.data;
+            titleText = restaurant.name;
             print('restaurant: ${restaurant.toJson()}');
             //Reinstatiated db instance to get the restaurant id
             _db = DatabaseService(userId: widget.user.id, restaurantId: restaurant.id);
