@@ -18,10 +18,6 @@ class Restaurant {
     image = snapshot.documents[0].data['image'];
   }
 
-  // List<Restaurant>.fromSnapshot(QuerySnapshot snapshot) {
-
-  // }
-
   Map<String, dynamic> toJson() {
     return {
       'id': id,

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/models/menu_item.dart';
-import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
 import 'package:giki_eats/utils/colors.dart';
