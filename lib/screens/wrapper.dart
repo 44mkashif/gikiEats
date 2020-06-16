@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_home.dart';
@@ -13,7 +14,6 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  
   bool loading = true;
   bool customer = false;
   bool restaurant = false;
@@ -28,10 +28,17 @@ class _WrapperState extends State<Wrapper> {
         stream: _db.userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if(snapshot.data.role == 'customer'){
-              return CustomerHome(user: snapshot.data,);
-            } else if(snapshot.data.role == 'restaurant') {
-              return RestaurantHome(user: snapshot.data,);
+            if (snapshot.data.role == 'customer') {
+              return StreamProvider<List<Restaurant>>.value(
+                value: _db.restaurants,
+                child: CustomerHome(
+                  user: snapshot.data,
+                ),
+              );
+            } else if (snapshot.data.role == 'restaurant') {
+              return RestaurantHome(
+                user: snapshot.data,
+              );
             }
           } else {
             return Loading();

@@ -9,7 +9,7 @@ class User {
 
    User(this.id, this.name, this.email, this.phoneNumber);
 
-   fromSnapshot(DocumentSnapshot snapshot){
+   User.fromSnapshot(DocumentSnapshot snapshot){
      id = snapshot.data['id'];
      name = snapshot.data['name'];
      email = snapshot.data['email'];

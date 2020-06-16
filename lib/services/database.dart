@@ -27,14 +27,20 @@ class DatabaseService {
     return _usersCollectionReference
         .document(userId)
         .snapshots()
-        .map(_userDataFromSnapshot);
+        .map((snapshot) => User.fromSnapshot(snapshot));
+  }
+
+  Stream<List<Restaurant>> get restaurants {
+    return _restaurantsCollectionReference
+    .snapshots()
+    .map(_restaurantListFromSnapshot);
   }
 
   Stream<Restaurant> get restaurantData {
     return _restaurantsCollectionReference
         .where('admin', arrayContains: userId)
         .snapshots()
-        .map(_restaurantFromSnapshot);
+        .map((snapshot) => Restaurant.fromSnapshot(snapshot));
   }
 
   Stream<MenuItem> get menuItem {
@@ -42,36 +48,17 @@ class DatabaseService {
         .document(restaurantId)
         .collection("menu")
         .snapshots()
-        .map(_menuItemFromSnapshot);
+        .map((snapshot) => MenuItem.fromSnapshot(snapshot));
   }
 
-  User _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    User user = User(
-      snapshot.data['id'],
-      snapshot.data['name'],
-      snapshot.data['email'],
-      snapshot.data['phoneNumber'],
-    );
-    user.role = snapshot.data['role'];
-    return user;
-  }
-
-  Restaurant _restaurantFromSnapshot(QuerySnapshot snapshot) {
-    return Restaurant(
-      snapshot.documents[0].data['id'],
-      snapshot.documents[0].data['name'],
-      snapshot.documents[0].data['description'],
-      snapshot.documents[0].data['phoneNumber'],
-      snapshot.documents[0].data['image'],
-    );
-  }
-
-  MenuItem _menuItemFromSnapshot(QuerySnapshot snapshot) {
-    return MenuItem(
-      snapshot.documents[0].data['id'],
-      snapshot.documents[0].data['name'],
-      snapshot.documents[0].data['price'],
-      snapshot.documents[0].data['category'],
-    );
+  List<Restaurant> _restaurantListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Restaurant(
+          doc.data['id'],
+          doc.data['name'],
+          doc.data['description'],
+          doc.data['phoneNumber'],
+          doc.data['image']);
+    }).toList();
   }
 }

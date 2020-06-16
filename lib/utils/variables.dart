@@ -3,6 +3,7 @@ import 'package:giki_eats/models/restaurant.dart';
 
 List<MenuItem> menu;
 Restaurant restaurant;
+List<Restaurant> restaurants;
 List<Map<String, String>> categories = [
   {'name': 'Desi', 'image': 'images/desi_food.jpg'},
   {'name': 'Fast Food', 'image': 'images/fast_food.png'},
