@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                     child: Text(
                       'Create Account',
                       style: TextStyle(
-                        color: offwhite,
+                        color: white,
                         fontSize: 30.0,
                         fontWeight: FontWeight.w400,
                       ),
@@ -58,7 +58,7 @@ class _SignUpState extends State<SignUp> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: offwhite,
+                        color: white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(60),
                           topRight: Radius.circular(60),
@@ -171,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                                   child: Text(
                                     "Create Account",
                                     style: TextStyle(
-                                      color: offwhite,
+                                      color: white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),

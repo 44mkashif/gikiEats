@@ -19,8 +19,8 @@ class WelcomePage extends StatelessWidget {
               Colors.teal[300],
               Colors.teal[200],
               Colors.teal[100],
-              offwhite,
-              offwhite,
+              white,
+              white,
             ],
           ),
         ),
@@ -75,7 +75,7 @@ class WelcomePage extends StatelessWidget {
                 //Our App will make your food ordering experience pleasant and fast.
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: offwhite,
+                  color: white,
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                 ),
@@ -95,7 +95,7 @@ class WelcomePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushNamed('/login');
                   },
-                  color: offwhite,
+                  color: white,
                   child: Text(
                     "Login",
                     style: TextStyle(
@@ -125,7 +125,7 @@ class WelcomePage extends StatelessWidget {
                   child: Text(
                     "Create Account",
                     style: TextStyle(
-                      color: offwhite,
+                      color: white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),

@@ -241,7 +241,7 @@ class _HomeState extends State<CustomerHome> {
               accountName: Text('${widget.user.name}'),
               accountEmail: Text('${widget.user.email}'),
               currentAccountPicture: CircleAvatar(
-                backgroundColor: offwhite,
+                backgroundColor: white,
                 child: Text(
                   "A",
                   style: TextStyle(fontSize: 40.0, color: teal),
