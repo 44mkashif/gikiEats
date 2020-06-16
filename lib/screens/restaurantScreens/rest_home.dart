@@ -74,7 +74,7 @@ class _HomeState extends State<RestaurantHome> {
               currentAccountPicture: CircleAvatar(
                 backgroundColor: white,
                 child: Text(
-                  "A",
+                  "${widget.user.name[0]}",
                   style: TextStyle(
                     fontSize: 40.0,
                     color: teal
