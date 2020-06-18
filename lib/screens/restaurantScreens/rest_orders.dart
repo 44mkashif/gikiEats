@@ -15,7 +15,7 @@ class RestaurantOrders extends StatefulWidget {
 
 class _OrderState extends State<RestaurantOrders> {
   final AuthService _auth = AuthService();
-  String titleText = 'GIKI Eats';
+  String titleText = 'Orders';
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,13 @@ class _OrderState extends State<RestaurantOrders> {
         stream: _db.ordersDataForRestaurant,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Order order = snapshot.data;
-            return Text(order.id);
+            List<Order> orders = snapshot.data;
+            return Text(orders[0].menuIDs[0]);
           } else {
             return Loading();
           }
         },
       ),
-      drawer: RestaurantDrawer(user: loggedInUser)
     );
   }
 }
