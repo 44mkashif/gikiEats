@@ -73,6 +73,8 @@ flutter:
    - images/ayaan.jpg
    - images/raju.png
    - images/hotnspicy.jpg
+   - images/menu.png
+   - images/order.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
