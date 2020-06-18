@@ -1,6 +1,8 @@
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/restaurant.dart';
+import 'package:giki_eats/models/user.dart';
 
+User loggedInUser;
 List<MenuItem> menu;
 Restaurant restaurant;
 List<Restaurant> restaurants;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/login.dart';
+import 'package:giki_eats/screens/restaurantScreens/rest_orders.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/screens/wrapper.dart';
@@ -46,6 +47,9 @@ class RouteGenerator {
 
       case '/signup':
         return MaterialPageRoute(builder: (_) => SignUp());
+
+      case '/restOrders':
+        return MaterialPageRoute(builder: (_) => RestaurantOrders());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third
