@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/user.dart';
 import 'package:giki_eats/services/auth.dart';
@@ -42,18 +43,145 @@ class _HomeState extends State<RestaurantHome> {
                 if (snapshot.hasData) {
                   menu = [snapshot.data];
                   print('menuItem: ${menu[0].toJson()}');
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    //restaurant contains the restaurant of which it is admin. Use it to create homescreen
-                    //menu list contains all the menu items of this restaurant
-                    //They both are global variables stored in variables.dart
-                    children: <Widget>[
-                      Text(restaurant.name, textAlign: TextAlign.center),
-                      Text(restaurant.description, textAlign: TextAlign.center),
-                      Text(restaurant.phoneNumber, textAlign: TextAlign.center),
-                      Text(menu[0].name, textAlign: TextAlign.center),
-                    ],
+                  return Container(
+                    color: Colors.grey[300],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: ClipRRect(
+                            child: Image.asset(
+                              '${restaurant.image}',
+                              height: 200,
+                              width: double.infinity,
+                              fit: BoxFit.fill,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '${restaurant.description}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w300,
+                              color: teal,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                          child: ListView(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  GestureDetector(
+                                    child: Container(
+                                      height: 150,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        color: teal,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: ClipRRect(
+                                          child: Image.asset(
+                                            "images/menu.png",
+                                            color: white,
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () => print('View Menu...'),
+                                  ),
+
+                                  SizedBox(
+                                    width: 40,
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      width: 150,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                          color: teal,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: Center(
+                                        child: ClipRRect(
+                                          child: Image.asset(
+                                            "images/order.png",
+                                            color: white,
+                                            height: 100,
+                                            width: 100,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () => print('View Order...'),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Menu',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        color: teal,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'Orders',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                        color: teal,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Contact: ${restaurant.phoneNumber}',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300,
+                                    color: teal,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 } else {
                   return Loading();
@@ -76,13 +204,13 @@ class _HomeState extends State<RestaurantHome> {
                 child: Text(
                   "${widget.user.name[0]}",
                   style: TextStyle(
-                    fontSize: 40.0,
-                    color: teal
+                      fontSize: 40.0,
+                      color: teal
                   ),
                 ),
               ),
               decoration: BoxDecoration(
-                color: teal
+                  color: teal
               ),
             ),
             ListTile(
