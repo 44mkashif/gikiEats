@@ -17,7 +17,7 @@ class DatabaseService {
       Firestore.instance.collection("restaurants");
 
   final CollectionReference _ordersCollectionReference =
-      Firestore.instance.collection("orders");    
+      Firestore.instance.collection("orders");
 
   Future createUser(User user) async {
     try {
@@ -28,7 +28,7 @@ class DatabaseService {
   }
 
   Stream<Order> get ordersDataForRestaurant {
-      return _ordersCollectionReference
+    return _ordersCollectionReference
         .where('restaurantID', isEqualTo: restaurantId)
         .snapshots()
         .map((snapshot) => Order.fromSnapshot(snapshot));
@@ -43,8 +43,8 @@ class DatabaseService {
 
   Stream<List<Restaurant>> get restaurants {
     return _restaurantsCollectionReference
-    .snapshots()
-    .map(_restaurantListFromSnapshot);
+        .snapshots()
+        .map(_restaurantListFromSnapshot);
   }
 
   Stream<Restaurant> get restaurantData {
@@ -52,6 +52,14 @@ class DatabaseService {
         .where('admin', arrayContains: userId)
         .snapshots()
         .map((snapshot) => Restaurant.fromSnapshot(snapshot));
+  }
+
+  Stream<List<MenuItem>> get menu {
+    return _restaurantsCollectionReference
+        .document(restaurantId)
+        .collection("menu")
+        .snapshots()
+        .map(_menuFromSnapshot);
   }
 
   Stream<MenuItem> get menuItem {
@@ -65,12 +73,24 @@ class DatabaseService {
   List<Restaurant> _restaurantListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Restaurant(
-          doc.data['id'],
-          doc.data['name'],
-          doc.data['description'],
-          doc.data['phoneNumber'],
-          doc.data['image']);
+        doc.data['id'],
+        doc.data['name'],
+        doc.data['description'],
+        doc.data['phoneNumber'],
+        doc.data['image'],
+      );
     }).toList();
   }
 
+  List<MenuItem> _menuFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return MenuItem(
+        doc.data['id'],
+        doc.data['name'],
+        doc.data['price'],
+        doc.data['category'],
+        doc.data['description'],
+      );
+    }).toList();
+  }
 }

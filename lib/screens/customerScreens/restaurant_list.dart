@@ -19,7 +19,7 @@ class _RestaurantListState extends State<RestaurantList> {
         for (var restaurant in widget.restaurants)
           GestureDetector(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Stack(
                 children: <Widget>[
                   ClipRRect(
@@ -88,7 +88,7 @@ class _RestaurantListState extends State<RestaurantList> {
               ),
             ),
             onTap: () {
-              print('Restaurant clicked');
+             Navigator.of(context).pushNamed('/restaurantScreen', arguments: restaurant);
             },
           ),
       ],

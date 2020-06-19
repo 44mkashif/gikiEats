@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
-import 'package:giki_eats/screens/customerScreens/categories_list.dart';
 import 'package:giki_eats/screens/customerScreens/customer_drawer.dart';
 import 'package:giki_eats/screens/customerScreens/restaurant_list.dart';
 import 'package:giki_eats/utils/colors.dart';
@@ -58,13 +57,13 @@ class _HomeState extends State<CustomerHome> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                child: CategoriesList(),
-              ),
+              // SizedBox(
+              //   height: 5,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+              //   child: CategoriesList(),
+              // ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: Column(
@@ -79,7 +78,7 @@ class _HomeState extends State<CustomerHome> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                       child: RestaurantList(restaurants: restaurants),
                     ),
                   ],
