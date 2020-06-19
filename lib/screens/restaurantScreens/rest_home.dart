@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/user.dart';
+import 'package:giki_eats/screens/restaurantScreens/rest_drawer.dart';
 import 'package:giki_eats/services/auth.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/services/database.dart';
@@ -22,6 +23,7 @@ class _HomeState extends State<RestaurantHome> {
   @override
   Widget build(BuildContext context) {
     DatabaseService _db = DatabaseService(userId: widget.user.id);
+    loggedInUser = widget.user;
     return Scaffold(
       appBar: AppBar(
         title: Text(titleText),
@@ -49,7 +51,7 @@ class _HomeState extends State<RestaurantHome> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.fromLTRB(0,0,0,8),
                           child: ClipRRect(
                             child: Image.asset(
                               '${restaurant.image}',
@@ -57,16 +59,27 @@ class _HomeState extends State<RestaurantHome> {
                               width: double.infinity,
                               fit: BoxFit.fill,
                             ),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                           ),
                         ),
-                        SizedBox(
-                          height: 5,
+                        Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.fromLTRB(20, 5, 20, 15),
+                          child: Text(
+                            '${restaurant.description}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: teal,
+                            ),
+                          ),
                         ),
                         Container(
                           alignment: Alignment.center,
                           child: Text(
-                            '${restaurant.description}',
+                            'Contact: ${restaurant.phoneNumber}',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w300,
@@ -75,7 +88,7 @@ class _HomeState extends State<RestaurantHome> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 40,
                         ),
                         Expanded(
                           child: ListView(
@@ -105,7 +118,6 @@ class _HomeState extends State<RestaurantHome> {
                                     ),
                                     onTap: () => print('View Menu...'),
                                   ),
-
                                   SizedBox(
                                     width: 40,
                                   ),
@@ -129,12 +141,14 @@ class _HomeState extends State<RestaurantHome> {
                                         ),
                                       ),
                                     ),
-                                    onTap: () => print('View Order...'),
+                                    onTap: () => {
+                                      Navigator.pushNamed(context, '/restOrders')
+                                    },
                                   ),
                                 ],
                               ),
                               SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -163,20 +177,6 @@ class _HomeState extends State<RestaurantHome> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Contact: ${restaurant.phoneNumber}',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w300,
-                                    color: teal,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -193,92 +193,7 @@ class _HomeState extends State<RestaurantHome> {
           }
         },
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text('${widget.user.name}'),
-              accountEmail: Text('${widget.user.email}'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: white,
-                child: Text(
-                  "${widget.user.name[0]}",
-                  style: TextStyle(
-                      fontSize: 40.0,
-                      color: teal
-                  ),
-                ),
-              ),
-              decoration: BoxDecoration(
-                  color: teal
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            Divider(
-              height: 1,
-              color: Colors.grey,
-              indent: 20,
-              endIndent: 20,
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            Divider(
-              height: 1,
-              color: Colors.grey,
-              indent: 20,
-              endIndent: 20,
-            ),
-            ListTile(
-              leading: Icon(Icons.shopping_cart),
-              title: Text('My Orders'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            Divider(
-              height: 1,
-              color: Colors.grey,
-              indent: 20,
-              endIndent: 20,
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            Divider(
-              height: 1,
-              color: Colors.grey,
-              indent: 20,
-              endIndent: 20,
-            ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Logout'),
-              onTap: () async {
-                await _auth.signOut();
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: RestaurantDrawer(user: widget.user)
     );
   }
 }

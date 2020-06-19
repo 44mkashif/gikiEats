@@ -27,11 +27,13 @@ class DatabaseService {
     }
   }
 
-  Stream<Order> get ordersDataForRestaurant {
-    return _ordersCollectionReference
+  Stream<List<Order>> get ordersDataForRestaurant {
+      return _ordersCollectionReference
+//   Stream<Order> get ordersDataForRestaurant {
+//     return _ordersCollectionReference
         .where('restaurantID', isEqualTo: restaurantId)
         .snapshots()
-        .map((snapshot) => Order.fromSnapshot(snapshot));
+        .map(_orderListFromSnapshot);
   }
 
   Stream<User> get userData {
@@ -78,6 +80,21 @@ class DatabaseService {
         doc.data['description'],
         doc.data['phoneNumber'],
         doc.data['image'],
+      );
+    }).toList();
+  }
+
+  List<Order> _orderListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return Order(
+          doc.data['id'],
+          doc.data['restaurantID'],
+          doc.data['userID'],
+          doc.data['status'],
+          doc.data['orderedOn'],
+          doc.data['acceptedOn'],
+          List.from(doc.data['menuIDs']),
+          List.from(doc.data['menuQty'])
       );
     }).toList();
   }
