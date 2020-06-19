@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
+import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
 import 'package:giki_eats/screens/login.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_orders.dart';
 import 'package:giki_eats/screens/signup.dart';
@@ -12,7 +14,6 @@ import 'screens/restaurantScreens/rest_home.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
     switch (settings.name) {
@@ -25,20 +26,14 @@ class RouteGenerator {
       case '/customerHome':
         if (args is User) {
           return MaterialPageRoute(
-            builder: (context) => CustomerHome(
-              user: args,
-            ),
-          );
+              builder: (context) => CustomerHome(user: args));
         }
         return _errorRoute();
 
       case '/restHome':
         if (args is User) {
           return MaterialPageRoute(
-            builder: (context) => RestaurantHome(
-              user: args,
-            ),
-          );
+              builder: (context) => RestaurantHome(user: args));
         }
         return _errorRoute();
 
@@ -50,6 +45,14 @@ class RouteGenerator {
 
       case '/restOrders':
         return MaterialPageRoute(builder: (_) => RestaurantOrders());
+        
+      case '/restaurantScreen':
+        if (args is Restaurant) {
+          return MaterialPageRoute(
+              builder: (context) => RestaurantScreen(restaurant: args));
+        }
+        return _errorRoute();
+
 
       default:
         // If there is no such named route in the switch statement, e.g. /third
@@ -61,6 +64,7 @@ class RouteGenerator {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('GIKI Eats'),
         ),
         body: Container(
@@ -81,16 +85,18 @@ class RouteGenerator {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 10,),
-              Text(
-              'Page Not Found',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
+              SizedBox(
+                height: 10,
               ),
-              textAlign: TextAlign.center,
-            ),
+              Text(
+                'Page Not Found',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
