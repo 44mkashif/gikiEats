@@ -5,12 +5,14 @@ class Order {
   String restaurantID;
   String userID;
   String status;
+  String toLocation;
+  int total;
   Timestamp orderedOn;
   Timestamp acceptedOn;
   List<String> menuIDs;
   List<int> menuQty;
 
-  Order(this.id, this.restaurantID, this.userID, this.status, this.orderedOn,
+  Order(this.id, this.restaurantID, this.userID, this.status, this.toLocation, this.total, this.orderedOn,
       this.acceptedOn, this.menuIDs, this.menuQty);
 
   Order.fromSnapshot(QuerySnapshot snapshot) {
@@ -18,6 +20,8 @@ class Order {
     restaurantID = snapshot.documents[0].data['restaurantID'];
     userID = snapshot.documents[0].data['userID'];
     status = snapshot.documents[0].data['status'];
+    toLocation = snapshot.documents[0].data['toLocation'];
+    total = snapshot.documents[0].data['total'];
     orderedOn = snapshot.documents[0].data['orderedOn'];
     acceptedOn = snapshot.documents[0].data['acceptedOn'];
     menuIDs = List.from(snapshot.documents[0].data['menuIDs']);
@@ -30,6 +34,8 @@ class Order {
       'restaurantID': restaurantID,
       'userID': userID,
       'status': status,
+      'toLocation': toLocation,
+      'total': total,
       'orderedOn': orderedOn,
       'acceptedOn': acceptedOn,
       'menuIDs': menuIDs.toString(),
