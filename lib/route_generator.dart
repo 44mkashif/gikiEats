@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:giki_eats/models/menu_item.dart';
-import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
-import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
-import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
+import 'package:giki_eats/screens/customerScreens/orders.dart';
 import 'package:giki_eats/screens/login.dart';
-import 'package:giki_eats/screens/restaurantScreens/rest_orders.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/screens/wrapper.dart';
@@ -16,6 +12,7 @@ import 'screens/restaurantScreens/rest_home.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
     switch (settings.name) {
@@ -25,43 +22,35 @@ class RouteGenerator {
       case '/welcome':
         return MaterialPageRoute(builder: (_) => WelcomePage());
 
+      case '/orders':
+        return MaterialPageRoute(builder: (_) => Myorders());
+
       case '/customerHome':
         if (args is User) {
           return MaterialPageRoute(
-              builder: (context) => CustomerHome(user: args));
+            builder: (context) => CustomerHome(
+              user: args,
+            ),
+          );
         }
         return _errorRoute();
 
       case '/restHome':
         if (args is User) {
           return MaterialPageRoute(
-              builder: (context) => RestaurantHome(user: args));
+            builder: (context) => RestaurantHome(
+              user: args,
+            ),
+          );
         }
         return _errorRoute();
 
       case '/login':
         return MaterialPageRoute(builder: (_) => Login());
 
+
       case '/signup':
         return MaterialPageRoute(builder: (_) => SignUp());
-
-      case '/restOrders':
-        return MaterialPageRoute(builder: (_) => RestaurantOrders());
-        
-      case '/restaurantScreen':
-        if (args is Restaurant) {
-          return MaterialPageRoute(
-              builder: (context) => RestaurantScreen(restaurant: args));
-        }
-        return _errorRoute();
-
-      case '/menuItemScreen':
-        if (args is MenuItem) {
-          return MaterialPageRoute(
-              builder: (context) => MenuItemScreen(menuItem: args));
-        }
-        return _errorRoute();
-
 
       default:
         // If there is no such named route in the switch statement, e.g. /third
@@ -73,7 +62,6 @@ class RouteGenerator {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
           title: Text('GIKI Eats'),
         ),
         body: Container(
@@ -94,18 +82,16 @@ class RouteGenerator {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10,),
               Text(
-                'Page Not Found',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
-                textAlign: TextAlign.center,
+              'Page Not Found',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
               ),
+              textAlign: TextAlign.center,
+            ),
             ],
           ),
         ),
