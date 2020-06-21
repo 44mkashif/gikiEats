@@ -16,7 +16,7 @@ class Myorders extends StatelessWidget {
             'Orders',
             style: TextStyle(
               color: black,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
           ),
