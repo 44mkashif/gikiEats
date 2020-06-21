@@ -109,6 +109,7 @@ class DatabaseService {
         doc.data['price'],
         doc.data['category'],
         doc.data['description'],
+        doc.data['image'],
       );
     }).toList();
   }

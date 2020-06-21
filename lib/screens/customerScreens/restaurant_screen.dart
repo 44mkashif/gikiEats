@@ -122,9 +122,9 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                   controller: _tabController,
                   children: <Widget>[
                     ListView.builder(
-                      itemCount: desi.length * 10,
+                      itemCount: desi.length,
                       itemBuilder: (context, index) {
-                        return menuItemContainer(desi[0]);
+                        return menuItemContainer(desi[index]);
                       },
                     ),
                     ListView.builder(
@@ -160,41 +160,77 @@ class _RestaurantScreenState extends State<RestaurantScreen>
       child: InkWell(
         splashColor: teal.withOpacity(0.3),
         onTap: () {
-          //Todo menu item page
           print('${menuItem.name} is tapped');
+          Navigator.of(context)
+              .pushNamed('/menuItemScreen', arguments: menuItem);
         },
         child: Container(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: EdgeInsets.fromLTRB(15, 12, 15, 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text(
-                menuItem.name,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Container(
+                child: Hero(
+                  tag: menuItem.name,
+                  child: CircleAvatar(
+                    radius: 55,
+                    backgroundColor: teal,
+                    child: CircleAvatar(
+                      radius: 52,
+                      backgroundColor: white,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage(
+                          'images/fast_food.png',
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
-                height: 5,
+                width: 15,
               ),
-              Text(
-                menuItem.description,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 15,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Rs. ${menuItem.price.toString()}',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      menuItem.name,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: teal,
+                      ),
+                    ),
+                    // SizedBox(
+                    //   height: 5,
+                    // ),
+                    // Text(
+                    //   menuItem.description,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   maxLines: 1,
+                    //   textAlign: TextAlign.start,
+                    //   style: TextStyle(
+                    //     fontSize: 15,
+                    //   ),
+                    // ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Rs. ${menuItem.price.toString()}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: brown,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
