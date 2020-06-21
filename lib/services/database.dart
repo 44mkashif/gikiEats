@@ -91,6 +91,8 @@ class DatabaseService {
           doc.data['restaurantID'],
           doc.data['userID'],
           doc.data['status'],
+          doc.data['toLocation'],
+          doc.data['total'],
           doc.data['orderedOn'],
           doc.data['acceptedOn'],
           List.from(doc.data['menuIDs']),

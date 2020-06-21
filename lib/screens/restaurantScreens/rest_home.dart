@@ -46,7 +46,6 @@ class _HomeState extends State<RestaurantHome> {
                   menu = [snapshot.data];
                   print('menuItem: ${menu[0].toJson()}');
                   return Container(
-                    color: Colors.grey[300],
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -103,6 +102,14 @@ class _HomeState extends State<RestaurantHome> {
                                       decoration: BoxDecoration(
                                         color: teal,
                                         borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(0.5),
+                                                spreadRadius: 5,
+                                                blurRadius: 7,
+                                                offset: Offset(0, 3), // changes position of shadow
+                                              ),
+                                            ],
                                       ),
                                       child: Center(
                                         child: ClipRRect(
@@ -127,7 +134,15 @@ class _HomeState extends State<RestaurantHome> {
                                       height: 150,
                                       decoration: BoxDecoration(
                                           color: teal,
-                                          borderRadius: BorderRadius.circular(10)
+                                          borderRadius: BorderRadius.circular(10),
+                                          boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(0.5),
+                                                spreadRadius: 5,
+                                                blurRadius: 7,
+                                                offset: Offset(0, 3), // changes position of shadow
+                                              ),
+                                            ],
                                       ),
                                       child: Center(
                                         child: ClipRRect(
@@ -161,6 +176,13 @@ class _HomeState extends State<RestaurantHome> {
                                         fontSize: 22,
                                         fontWeight: FontWeight.w500,
                                         color: teal,
+                                        shadows: [
+                                              Shadow(
+                                                color: Colors.grey.withOpacity(0.5),
+                                                blurRadius: 7,
+                                                offset: Offset(0, 3), // changes position of shadow
+                                              ),
+                                            ],
                                       ),
                                     ),
                                   ),
@@ -169,6 +191,13 @@ class _HomeState extends State<RestaurantHome> {
                                     child: Text(
                                       'Orders',
                                       style: TextStyle(
+                                        shadows: [
+                                              Shadow(
+                                                color: Colors.grey.withOpacity(0.5),
+                                                blurRadius: 7,
+                                                offset: Offset(0, 3), // changes position of shadow
+                                              ),
+                                            ],
                                         fontSize: 22,
                                         fontWeight: FontWeight.w500,
                                         color: teal,
