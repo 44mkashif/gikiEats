@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
+import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
 import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
 import 'package:giki_eats/screens/login.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_orders.dart';
@@ -50,6 +52,13 @@ class RouteGenerator {
         if (args is Restaurant) {
           return MaterialPageRoute(
               builder: (context) => RestaurantScreen(restaurant: args));
+        }
+        return _errorRoute();
+
+      case '/menuItemScreen':
+        if (args is MenuItem) {
+          return MaterialPageRoute(
+              builder: (context) => MenuItemScreen(menuItem: args));
         }
         return _errorRoute();
 
