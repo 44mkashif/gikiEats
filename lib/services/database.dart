@@ -4,10 +4,13 @@ import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
 
+import '../utils/variables.dart';
+
 class DatabaseService {
   final String userId;
   final String restaurantId;
-  DatabaseService({this.userId, this.restaurantId});
+  final String menuItemId;
+  DatabaseService({this.userId, this.restaurantId, this.menuItemId});
 
   //collection reference
   final CollectionReference _usersCollectionReference =
@@ -29,8 +32,6 @@ class DatabaseService {
 
   Stream<List<Order>> get ordersDataForRestaurant {
       return _ordersCollectionReference
-//   Stream<Order> get ordersDataForRestaurant {
-//     return _ordersCollectionReference
         .where('restaurantID', isEqualTo: restaurantId)
         .snapshots()
         .map(_orderListFromSnapshot);
@@ -56,6 +57,13 @@ class DatabaseService {
         .map((snapshot) => Restaurant.fromSnapshot(snapshot));
   }
 
+  Stream<Restaurant> get restaurant {
+    return _restaurantsCollectionReference
+        .where('id', isEqualTo: restaurantId)
+        .snapshots()
+        .map((snapshot) => Restaurant.fromSnapshot(snapshot));
+  }
+
   Stream<List<MenuItem>> get menu {
     return _restaurantsCollectionReference
         .document(restaurantId)
@@ -68,6 +76,7 @@ class DatabaseService {
     return _restaurantsCollectionReference
         .document(restaurantId)
         .collection("menu")
+        .where('id', isEqualTo: menuItemId)
         .snapshots()
         .map((snapshot) => MenuItem.fromSnapshot(snapshot));
   }

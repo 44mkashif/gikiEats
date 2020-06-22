@@ -1,15 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/menu_item.dart';
-import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/utils/variables.dart';
 
+import '../../utils/loader.dart';
+import '../../utils/variables.dart';
+
 class RestaurantScreen extends StatefulWidget {
-  final Restaurant restaurant;
-  const RestaurantScreen({Key key, this.restaurant}) : super(key: key);
+  final String restaurantId;
+  const RestaurantScreen({Key key, this.restaurantId}) : super(key: key);
   @override
   _RestaurantScreenState createState() => _RestaurantScreenState();
 }
@@ -32,122 +34,132 @@ class _RestaurantScreenState extends State<RestaurantScreen>
 
   @override
   Widget build(BuildContext context) {
-    DatabaseService _db = DatabaseService(restaurantId: widget.restaurant.id);
-    return Scaffold(
-      backgroundColor: white,
-      body: StreamBuilder(
-        stream: _db.menu,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            menu = snapshot.data;
-            List<MenuItem> desi = [];
-            List<MenuItem> chinese = [];
-            List<MenuItem> fastFood = [];
-            for (var menuItem in menu) {
-              if (menuItem.category == "Desi") {
-                desi.add(menuItem);
-              } else if (menuItem.category == "Chinese") {
-                chinese.add(menuItem);
-              } else if (menuItem.category == "Fast Food") {
-                fastFood.add(menuItem);
-              }
-            }
-            return NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    expandedHeight: 250,
-                    pinned: true,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Image.asset(
-                        widget.restaurant.image,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(
-                        widget.restaurant.name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: white,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black,
-                              offset: Offset(0, 3),
-                              blurRadius: 5,
+    DatabaseService _db = DatabaseService(restaurantId: widget.restaurantId);
+    return StreamBuilder(
+      stream: _db.restaurant,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          restaurant = snapshot.data;
+          return Scaffold(
+            backgroundColor: white,
+            body: StreamBuilder(
+              stream: _db.menu,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  menu = snapshot.data;
+                  List<MenuItem> desi = [];
+                  List<MenuItem> chinese = [];
+                  List<MenuItem> fastFood = [];
+                  for (var menuItem in menu) {
+                    if (menuItem.category == "Desi") {
+                      desi.add(menuItem);
+                    } else if (menuItem.category == "Chinese") {
+                      chinese.add(menuItem);
+                    } else if (menuItem.category == "Fast Food") {
+                      fastFood.add(menuItem);
+                    }
+                  }
+                  return NestedScrollView(
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        SliverAppBar(
+                          expandedHeight: 250,
+                          pinned: true,
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Image.asset(
+                              restaurant.image,
+                              fit: BoxFit.cover,
+                            ),
+                            title: Text(
+                              restaurant.name,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: white,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black,
+                                    offset: Offset(0, 3),
+                                    blurRadius: 5,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            centerTitle: true,
+                          ),
+                          actions: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.info),
+                              onPressed: () {
+                                //Todo Restaurant info page
+                                print('Restaurant info tapped...');
+                              },
                             ),
                           ],
                         ),
-                      ),
-                      centerTitle: true,
-                    ),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.info),
-                        onPressed: () {
-                          //Todo Restaurant info page
-                          print('Restaurant info tapped...');
-                        },
-                      ),
-                    ],
-                  ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: Delegate(
-                      TabBar(
-                        controller: _tabController,
-                        labelColor: teal,
-                        indicatorWeight: 3,
-                        labelStyle: TextStyle(
-                          fontWeight: FontWeight.w500,
-                        ),
-                        unselectedLabelColor: grey,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        tabs: <Widget>[
-                          for (var category in categories)
-                            Tab(
-                              child: Container(
-                                child: Align(
-                                  child: Text(category['name']),
-                                ),
+                        SliverPersistentHeader(
+                          pinned: true,
+                          delegate: Delegate(
+                            TabBar(
+                              controller: _tabController,
+                              labelColor: teal,
+                              indicatorWeight: 3,
+                              labelStyle: TextStyle(
+                                fontWeight: FontWeight.w500,
                               ),
+                              unselectedLabelColor: grey,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              tabs: <Widget>[
+                                for (var category in categories)
+                                  Tab(
+                                    child: Container(
+                                      child: Align(
+                                        child: Text(category['name']),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
+                          ),
+                        ),
+                      ];
+                    },
+                    body: Container(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: <Widget>[
+                          ListView.builder(
+                            itemCount: desi.length,
+                            itemBuilder: (context, index) {
+                              return menuItemContainer(desi[index]);
+                            },
+                          ),
+                          ListView.builder(
+                            itemCount: fastFood.length,
+                            itemBuilder: (context, index) {
+                              return menuItemContainer(fastFood[index]);
+                            },
+                          ),
+                          ListView.builder(
+                            itemCount: chinese.length,
+                            itemBuilder: (context, index) {
+                              return menuItemContainer(chinese[index]);
+                            },
+                          ),
                         ],
                       ),
                     ),
-                  ),
-                ];
+                  );
+                } else {
+                  return Loading();
+                }
               },
-              body: Container(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: <Widget>[
-                    ListView.builder(
-                      itemCount: desi.length,
-                      itemBuilder: (context, index) {
-                        return menuItemContainer(desi[index]);
-                      },
-                    ),
-                    ListView.builder(
-                      itemCount: fastFood.length,
-                      itemBuilder: (context, index) {
-                        return menuItemContainer(fastFood[index]);
-                      },
-                    ),
-                    ListView.builder(
-                      itemCount: chinese.length,
-                      itemBuilder: (context, index) {
-                        return menuItemContainer(chinese[index]);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return Loading();
-          }
-        },
-      ),
+            ),
+          );
+        } else {
+          return Loading();
+        }
+      },
     );
   }
 
@@ -162,7 +174,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
         onTap: () {
           print('${menuItem.name} is tapped');
           Navigator.of(context)
-              .pushNamed('/menuItemScreen', arguments: menuItem);
+              .pushNamed('/menuItemScreen', arguments: [widget.restaurantId,menuItem.id]);
         },
         child: Container(
           padding: EdgeInsets.fromLTRB(15, 12, 15, 12),
