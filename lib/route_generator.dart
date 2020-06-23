@@ -4,6 +4,8 @@ import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
 import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
 import 'package:giki_eats/screens/login.dart';
+import 'package:giki_eats/screens/restaurantScreens/add_menu.dart';
+import 'package:giki_eats/screens/restaurantScreens/rest_menu.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_orders.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
@@ -46,7 +48,13 @@ class RouteGenerator {
 
       case '/restOrders':
         return MaterialPageRoute(builder: (_) => RestaurantOrders());
-        
+
+      case '/restMenu':
+        return MaterialPageRoute(builder: (_) => RestaurantMenu());
+
+      case '/addMenu':
+        return MaterialPageRoute(builder: (_) => AddMenu());
+
       case '/restaurantScreen':
         if (args is String) {
           return MaterialPageRoute(
@@ -61,7 +69,6 @@ class RouteGenerator {
               builder: (context) => MenuItemScreen(restaurantId: arguments[0],menuItemId: arguments[1]));
         }
         return _errorRoute();
-
 
       default:
         // If there is no such named route in the switch statement, e.g. /third
