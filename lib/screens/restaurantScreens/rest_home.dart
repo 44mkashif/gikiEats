@@ -97,15 +97,15 @@ class _HomeState extends State<RestaurantHome> {
                                 children: <Widget>[
                                   GestureDetector(
                                     child: Container(
-                                      height: 150,
-                                      width: 150,
+                                      height: 120,
+                                      width: 120,
                                       decoration: BoxDecoration(
                                         color: teal,
                                         borderRadius: BorderRadius.circular(10),
                                         boxShadow: [
                                               BoxShadow(
                                                 color: Colors.grey.withOpacity(0.5),
-                                                spreadRadius: 5,
+                                                spreadRadius: 3,
                                                 blurRadius: 7,
                                                 offset: Offset(0, 3), // changes position of shadow
                                               ),
@@ -116,29 +116,29 @@ class _HomeState extends State<RestaurantHome> {
                                           child: Image.asset(
                                             "images/menu.png",
                                             color: white,
-                                            height: 100,
-                                            width: 100,
+                                            height: 80,
+                                            width: 80,
                                             fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    onTap: () => print('View Menu...'),
+                                    onTap: () => Navigator.pushNamed(context, '/restMenu')
                                   ),
                                   SizedBox(
-                                    width: 40,
+                                    width: 20,
                                   ),
                                   GestureDetector(
                                     child: Container(
-                                      width: 150,
-                                      height: 150,
+                                      width: 120,
+                                      height: 120,
                                       decoration: BoxDecoration(
                                           color: teal,
                                           borderRadius: BorderRadius.circular(10),
                                           boxShadow: [
                                               BoxShadow(
                                                 color: Colors.grey.withOpacity(0.5),
-                                                spreadRadius: 5,
+                                                spreadRadius: 3,
                                                 blurRadius: 7,
                                                 offset: Offset(0, 3), // changes position of shadow
                                               ),
@@ -149,8 +149,8 @@ class _HomeState extends State<RestaurantHome> {
                                           child: Image.asset(
                                             "images/order.png",
                                             color: white,
-                                            height: 100,
-                                            width: 100,
+                                            height: 80,
+                                            width: 80,
                                             fit: BoxFit.fill,
                                           ),
                                         ),
@@ -166,7 +166,7 @@ class _HomeState extends State<RestaurantHome> {
                                 height: 10,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   Container(
                                     alignment: Alignment.center,

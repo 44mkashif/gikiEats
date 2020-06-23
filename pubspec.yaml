@@ -78,6 +78,7 @@ flutter:
    - images/menu.png
    - images/order.png
    - images/ordersPageImage.jpg
+   - images/menucover.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
