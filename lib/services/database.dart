@@ -10,7 +10,8 @@ class DatabaseService {
   final String userId;
   final String restaurantId;
   final String menuItemId;
-  DatabaseService({this.userId, this.restaurantId, this.menuItemId});
+  final List<String> menuItems;
+  DatabaseService({this.userId, this.restaurantId, this.menuItemId, this.menuItems});
 
   //collection reference
   final CollectionReference _usersCollectionReference =
@@ -35,6 +36,15 @@ class DatabaseService {
         .where('restaurantID', isEqualTo: restaurantId)
         .snapshots()
         .map(_orderListFromSnapshot);
+  }
+
+  Stream<List<MenuItem>> get menuItemDataForOrderDetails {
+      return _restaurantsCollectionReference
+        .document(restaurantId)
+        .collection("menu")
+        .where('id', whereIn: menuItems)
+        .snapshots()
+        .map(_menuFromSnapshot);
   }
 
   Stream<User> get userData {

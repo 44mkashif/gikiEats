@@ -76,7 +76,7 @@ class _OrdersListState extends State<OrdersList> {
                 )
               ),
             onTap: () {
-             print('Clicked');
+              Navigator.of(context).pushNamed('/restOrderDetails', arguments: order);
             },
             )
         ],

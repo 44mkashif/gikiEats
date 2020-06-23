@@ -4,12 +4,14 @@ import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
 import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
 import 'package:giki_eats/screens/login.dart';
+import 'package:giki_eats/screens/restaurantScreens/rest_order_details.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_orders.dart';
 import 'package:giki_eats/screens/signup.dart';
 import 'package:giki_eats/screens/welcome.dart';
 import 'package:giki_eats/screens/wrapper.dart';
 import 'package:giki_eats/utils/colors.dart';
 
+import 'models/order.dart';
 import 'models/user.dart';
 import 'screens/restaurantScreens/rest_home.dart';
 
@@ -47,6 +49,14 @@ class RouteGenerator {
       case '/restOrders':
         return MaterialPageRoute(builder: (_) => RestaurantOrders());
         
+      case '/restOrderDetails':
+          if (args is Order) {
+            return MaterialPageRoute(
+                builder: (context) => RestaurantOrderDetails(order: args));
+          }
+          return _errorRoute();
+
+
       case '/restaurantScreen':
         if (args is String) {
           return MaterialPageRoute(
