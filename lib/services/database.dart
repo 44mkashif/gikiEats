@@ -89,6 +89,7 @@ class DatabaseService {
         doc.data['description'],
         doc.data['phoneNumber'],
         doc.data['image'],
+        doc.data['time'],
       );
     }).toList();
   }
