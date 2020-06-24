@@ -24,7 +24,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
     DatabaseService _db = new DatabaseService(restaurantId: restaurant.id);
     return Scaffold(
       body: StreamBuilder(
-        stream: _db.menu,
+        stream: _db.getActivatedMenuItems,
         builder: (context, snapshot){
           if(snapshot.hasData){
             menu = snapshot.data;
@@ -67,7 +67,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 ),
                 child: ListView(
                   children: <Widget>[
-                    for(int i=0; i<menu.length; i++)
+                    for(var menuItem in menu)
                       Stack(
                         children: <Widget>[
 
@@ -88,7 +88,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                             padding: const EdgeInsets.fromLTRB(100,30,18,0),
                             child: Container(
                               child: Text(
-                                '${menu[i].name}',
+                                '${menuItem.name}',
                                 style: TextStyle(
                                   fontSize: 22  ,
                                   fontWeight: FontWeight.w500,
@@ -104,7 +104,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                             padding: const EdgeInsets.fromLTRB(100,60,70,18),
                             child: Container(
                               child: Text(
-                                'Rs: ${menu[i].price}',
+                                'Rs: ${menuItem.price}',
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w500,
@@ -166,7 +166,8 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                                   color: teal,
                                 ),
                                 onTap: () {
-                                  print('Remove Item..');
+                                  print('${menuItem.name} is deactivated..');
+                                  _db.deactivateMenuItem(menuItem.id);
                                 },
                               ),
                             ),
