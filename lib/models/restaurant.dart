@@ -6,9 +6,10 @@ class Restaurant {
   String description;
   String phoneNumber;
   String image;
+  Map<String, dynamic> time;
 
   Restaurant(
-      this.id, this.name, this.description, this.phoneNumber, this.image);
+      this.id, this.name, this.description, this.phoneNumber, this.image, this.time);
 
   Restaurant.fromSnapshot(QuerySnapshot snapshot) {
     id = snapshot.documents[0].data['id'];
@@ -16,6 +17,7 @@ class Restaurant {
     description = snapshot.documents[0].data['description'];
     phoneNumber = snapshot.documents[0].data['phoneNumber'];
     image = snapshot.documents[0].data['image'];
+    time = snapshot.documents[0].data['time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -25,6 +27,7 @@ class Restaurant {
       'description': description,
       'phoneNumber': phoneNumber,
       'image': image,
+      'time': time,
     };
   }
 }

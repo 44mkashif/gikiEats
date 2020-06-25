@@ -5,7 +5,6 @@ import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/utils/variables.dart';
-
 import '../../utils/loader.dart';
 import '../../utils/variables.dart';
 
@@ -91,8 +90,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                             IconButton(
                               icon: Icon(Icons.info),
                               onPressed: () {
-                                //Todo Restaurant info page
-                                print('Restaurant info tapped...');
+                                Navigator.of(context).pushNamed('/restaurantInfo', arguments: widget.restaurantId);
                               },
                             ),
                           ],
