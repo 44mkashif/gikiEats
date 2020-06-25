@@ -32,6 +32,18 @@ class DatabaseService {
     }
   }
 
+  Future changeOrderStatus(String orderId, String updatedStatus) async{
+    try{
+      await _ordersCollectionReference
+      .document(orderId)
+      .updateData({
+        "status": updatedStatus
+      });
+    }catch(e){
+      return e.message;
+    }
+  }
+
   Future activateMenuItem(String menuItemId) async {
     try {
       await _restaurantsCollectionReference

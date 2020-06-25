@@ -24,6 +24,7 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
   Widget build(BuildContext context) {
     DatabaseService _db = DatabaseService(userId: widget.order.userID,restaurantId: restaurant.id, menuItems: widget.order.menuIDs);
     User orderedBy;
+    bool _isOrdered = widget.order.status == 'ORDERED' ? true : false;
 
     return Scaffold(
       appBar: AppBar(
@@ -202,6 +203,38 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
           }
         },
       ),
+      floatingActionButton: Visibility(
+        visible: _isOrdered,
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomRight,
+              child:
+                  FloatingActionButton(
+                    child: Icon(Icons.check),
+                    onPressed: () { _db.changeOrderStatus(widget.order.id, "ACCEPTED"); 
+                                    Navigator.pop(context);
+                                  },
+                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 5),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                  child:
+                    FloatingActionButton(
+                      child: Icon(Icons.cancel),
+                      onPressed: () { _db.changeOrderStatus(widget.order.id, "REJECTED");
+                                        Navigator.pop(context);
+                                     },
+                      heroTag: "Rejected",
+                      backgroundColor: Colors.redAccent[200],
+                    ),
+                )
+            )
+          ]
+        )
+      )
     );
   }
 
