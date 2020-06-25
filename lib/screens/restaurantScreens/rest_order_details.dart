@@ -18,11 +18,11 @@ class RestaurantOrderDetails extends StatefulWidget {
 
 class _OrderDetailState extends State<RestaurantOrderDetails> {
   String titleText = 'Order Details';
+  List<MenuItem> menuItems;
  
   @override
   Widget build(BuildContext context) {
     DatabaseService _db = DatabaseService(userId: widget.order.userID,restaurantId: restaurant.id, menuItems: widget.order.menuIDs);
-    List<MenuItem> menuItems;
     User orderedBy;
 
     return Scaffold(
@@ -108,6 +108,26 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
                           )
                         ),
                         SizedBox(height: 10),
+                        checkStatusAndDisplayDate(),
+                        SizedBox(height: 10),
+                        RichText(
+                          text: new TextSpan(
+                            style: TextStyle(
+                              decorationStyle: TextDecorationStyle.solid,
+                              fontSize: 16,
+                            ),
+                            children: <TextSpan>[
+                              new TextSpan(text: 'Status: ', style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                color: teal
+                              )),
+                              new TextSpan(text: widget.order.status, style: TextStyle(
+                                color: Colors.black54
+                              )),
+                            ]
+                          )
+                        ),
+                        SizedBox(height: 10),
                         Padding(
                           padding:EdgeInsets.symmetric(horizontal:30.0),
                           child:Container(
@@ -124,11 +144,50 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
                           color: Colors.teal[400]
                         ),),
                         SizedBox(height: 10),
-                        ListView.builder(
-                          itemCount: menuItems.length,
-                          itemBuilder:  (context, index) {
-                              return menuItemContainer(menuItems[index]);
-                            },
+                        Container(
+                          height: 300,
+                          child: 
+                              ListView.builder(
+                                itemCount: menuItems.length,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder:  (context, index) {
+                                    return menuItemContainer(menuItems[index]);
+                                  },
+                              ),),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding:EdgeInsets.symmetric(horizontal:30.0),
+                          child:Container(
+                          height:1.0,
+                          width:110.0,
+                          color:Colors.blueGrey[300],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child:
+                          RichText(
+                            text: new TextSpan(
+                              style: TextStyle(
+                                decorationStyle: TextDecorationStyle.solid,
+                                fontSize: 16,
+                              ),
+                              children: <TextSpan>[
+                                new TextSpan(text: 'Total: ', style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: teal
+                                )),
+                                new TextSpan(text: 'Rs.' + widget.order.total.toString(), style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400
+                                )),
+                              ]
+                            )
+                          ),
                         )
                       ],
                     )
@@ -196,23 +255,26 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
                         color: teal,
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
-                    // Text(
-                    //   menuItem.description,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   maxLines: 1,
-                    //   textAlign: TextAlign.start,
-                    //   style: TextStyle(
-                    //     fontSize: 15,
-                    //   ),
-                    // ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
+                    
                     Text(
                       'Rs. ${menuItem.price.toString()}',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500,
+                        color: brown,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Qty: ' + widget.order.menuQty[menuItems.indexOf(menuItem)].toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: 17,
@@ -229,4 +291,44 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
       ),
     );
   } 
+  Widget checkStatusAndDisplayDate(){
+    if(widget.order.status == 'ACCEPTED'){
+      return RichText(
+            text: new TextSpan(
+              style: TextStyle(
+                decorationStyle: TextDecorationStyle.solid,
+                fontSize: 16,
+              ),
+              children: <TextSpan>[
+                new TextSpan(text: 'Accepted On: ', style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: teal
+                )),
+                new TextSpan(text: widget.order.acceptedOn.toDate().toString(), style: TextStyle(
+                  color: Colors.black54
+                )),
+              ]
+            )
+          );
+    }
+    else{
+      return RichText(
+            text: new TextSpan(
+              style: TextStyle(
+                decorationStyle: TextDecorationStyle.solid,
+                fontSize: 16,
+              ),
+              children: <TextSpan>[
+                new TextSpan(text: 'Ordered On: ', style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  color: teal
+                )),
+                new TextSpan(text: widget.order.orderedOn.toDate().toString(), style: TextStyle(
+                  color: Colors.black54
+                )),
+              ]
+            )
+          );
+    }
+  }
 }
