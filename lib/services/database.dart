@@ -3,9 +3,6 @@ import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
-import 'package:giki_eats/screens/restaurantScreens/rest_menu.dart';
-
-import '../utils/variables.dart';
 
 class DatabaseService {
   final String userId;
@@ -27,6 +24,14 @@ class DatabaseService {
   Future createUser(User user) async {
     try {
       await _usersCollectionReference.document(user.id).setData(user.toJson());
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future createOrder(Order order) async {
+    try {
+      await _ordersCollectionReference.add(order.toJson());
     } catch (e) {
       return e.message;
     }
@@ -166,7 +171,6 @@ class DatabaseService {
   List<Order> _orderListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Order(
-          doc.data['id'],
           doc.data['restaurantID'],
           doc.data['userID'],
           doc.data['status'],

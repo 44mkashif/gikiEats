@@ -15,10 +15,13 @@ class MenuItemScreen extends StatefulWidget {
 }
 
 class _MenuItemScreenState extends State<MenuItemScreen> {
+  int quantity = 1;
+
   @override
   Widget build(BuildContext context) {
     DatabaseService _db = DatabaseService(
         restaurantId: widget.restaurantId, menuItemId: widget.menuItemId);
+
     return StreamBuilder(
       stream: _db.menuItem,
       builder: (context, snapshot) {
@@ -45,7 +48,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                           color: white,
                         ),
                         onPressed: () {
-                          print('Shoping cart');
+                          Navigator.of(context).pushNamed('/cart', arguments: [widget.restaurantId]);
                         },
                       ),
                     ],
@@ -65,6 +68,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                         child: CircleAvatar(
                           radius: 100,
                           backgroundImage: AssetImage(
+                            //Todo menuitem image
                             'images/fast_food.png',
                           ),
                         ),
@@ -128,7 +132,12 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                       color: teal,
                                     ),
                                     onPressed: () {
-                                      print('remove');
+                                      if (quantity != 1) {
+                                        setState(() {
+                                          quantity -= 1;
+                                          print(quantity);
+                                        });
+                                      }
                                     },
                                   ),
                                   Container(
@@ -141,8 +150,14 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                             BorderRadius.circular(30.0),
                                       ),
                                       elevation: 7.0,
-                                      onPressed: () {
+                                      onPressed: () async {
                                         print('add to cart');
+                                        Navigator.of(context).pushNamed('/cart',
+                                            arguments: [
+                                              menuItem,
+                                              quantity,
+                                              widget.restaurantId
+                                            ]);
                                       },
                                       color: teal,
                                       child: Text(
@@ -161,7 +176,10 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                       color: teal,
                                     ),
                                     onPressed: () {
-                                      print('add');
+                                      setState(() {
+                                        quantity += 1;
+                                        print(quantity);
+                                      });
                                     },
                                   ),
                                 ],

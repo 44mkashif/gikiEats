@@ -11,3 +11,5 @@ List<Map<String, String>> categories = [
   {'name': 'Fast Food', 'image': 'images/fast_food.png'},
   {'name': 'Chinese', 'image': 'images/chinese_food.jpg'},
 ];
+List<String> menuIds = [];
+List<int> menuQty = [];

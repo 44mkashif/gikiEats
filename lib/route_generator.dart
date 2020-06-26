@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/menu_item.dart';
+import 'package:giki_eats/screens/customerScreens/cart.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
 import 'package:giki_eats/screens/customerScreens/rest_info.dart';
@@ -51,14 +52,13 @@ class RouteGenerator {
 
       case '/restOrders':
         return MaterialPageRoute(builder: (_) => RestaurantOrders());
-        
-      case '/restOrderDetails':
-          if (args is Order) {
-            return MaterialPageRoute(
-                builder: (context) => RestaurantOrderDetails(order: args));
-          }
-          return _errorRoute();
 
+      case '/restOrderDetails':
+        if (args is Order) {
+          return MaterialPageRoute(
+              builder: (context) => RestaurantOrderDetails(order: args));
+        }
+        return _errorRoute();
 
       case '/restMenu':
         return MaterialPageRoute(builder: (_) => RestaurantMenu());
@@ -84,7 +84,29 @@ class RouteGenerator {
         List<String> arguments = args;
         if (arguments[0] is String && arguments[1] is String) {
           return MaterialPageRoute(
-              builder: (context) => MenuItemScreen(restaurantId: arguments[0],menuItemId: arguments[1]));
+              builder: (context) => MenuItemScreen(
+                  restaurantId: arguments[0], menuItemId: arguments[1]));
+        }
+        return _errorRoute();
+
+      case '/cart':
+        List<dynamic> arguments = args;
+        if (arguments.length == 3) {
+          if (arguments[0] is MenuItem &&
+              arguments[1] is int &&
+              arguments[2] is String) {
+            return MaterialPageRoute(
+              builder: (context) => Cart(
+                menuItem: arguments[0],
+                quantity: arguments[1],
+                restaurantId: arguments[2],
+              ),
+            );
+          }
+        } else if (arguments.length == 1){
+          if(arguments[0] is String){
+            return MaterialPageRoute(builder: (context) => Cart(restaurantId: arguments[0]));
+          }
         }
         return _errorRoute();
 
