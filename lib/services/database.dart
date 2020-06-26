@@ -3,6 +3,7 @@ import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
+import 'package:giki_eats/screens/restaurantScreens/rest_menu.dart';
 
 import '../utils/variables.dart';
 
@@ -28,6 +29,52 @@ class DatabaseService {
     } catch (e) {
       return e.message;
     }
+  }
+
+  Future activateMenuItem(String menuItemId) async {
+    try {
+      await _restaurantsCollectionReference
+          .document(restaurantId)
+          .collection("menu")
+          .document(menuItemId)
+          .updateData({
+        "active": 1,
+      });
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future deactivateMenuItem(String menuItemId) async {
+    try {
+      await _restaurantsCollectionReference
+          .document(restaurantId)
+          .collection("menu")
+          .document(menuItemId)
+          .updateData({
+        "active": 0,
+      });
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Stream<List<MenuItem>> get getActivatedMenuItems {
+    return _restaurantsCollectionReference
+        .document(restaurantId)
+        .collection("menu")
+        .where('active', isEqualTo: 1)
+        .snapshots()
+        .map(_menuFromSnapshot);
+  }
+
+  Stream<List<MenuItem>> get getDeactivatedMenuItems {
+    return _restaurantsCollectionReference
+        .document(restaurantId)
+        .collection("menu")
+        .where('active', isEqualTo: 0)
+        .snapshots()
+        .map(_menuFromSnapshot);
   }
 
   Stream<List<Order>> get ordersDataForRestaurant {
@@ -115,6 +162,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       return MenuItem(
         doc.data['id'],
+        doc.data['active'],
         doc.data['name'],
         doc.data['price'],
         doc.data['category'],

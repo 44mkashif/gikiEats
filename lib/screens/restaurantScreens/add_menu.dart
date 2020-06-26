@@ -24,7 +24,7 @@ class _AddMenu extends State<AddMenu> {
     DatabaseService _db = new DatabaseService(restaurantId: restaurant.id);
     return Scaffold(
       body: StreamBuilder(
-          stream: _db.menu,
+          stream: _db.getDeactivatedMenuItems,
           builder: (context, snapshot){
             if(snapshot.hasData){
               menu = snapshot.data;
@@ -67,7 +67,7 @@ class _AddMenu extends State<AddMenu> {
                   ),
                   child: ListView(
                     children: <Widget>[
-                      for(int i=0; i<menu.length; i++)
+                      for(var menuItem in menu)
                         Stack(
                           children: <Widget>[
 
@@ -89,7 +89,7 @@ class _AddMenu extends State<AddMenu> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '${menu[i].name}',
+                                  '${menuItem.name}',
                                   style: TextStyle(
                                     fontSize: 22  ,
                                     fontWeight: FontWeight.w500,
@@ -106,7 +106,7 @@ class _AddMenu extends State<AddMenu> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  'Rs: ${menu[i].price}',
+                                  'Rs: ${menuItem.price}',
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w500,
@@ -144,7 +144,7 @@ class _AddMenu extends State<AddMenu> {
                               ),
                             ),
 
-                            //rightSide Ioons
+                            //rightSide Icons
                             Padding(
                               padding: const EdgeInsets.fromLTRB(320,18,5,18),
                               child: Container(
@@ -168,7 +168,8 @@ class _AddMenu extends State<AddMenu> {
                                     color: teal,
                                   ),
                                   onTap: () {
-                                    print('Add Item..');
+                                    print('${menuItem.name} is activated...');
+                                    _db.activateMenuItem(menuItem.id);
                                   },
                                 ),
                               ),
