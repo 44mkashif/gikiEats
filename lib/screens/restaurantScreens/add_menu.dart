@@ -28,7 +28,6 @@ class _AddMenu extends State<AddMenu> {
           builder: (context, snapshot){
             if(snapshot.hasData){
               menu = snapshot.data;
-              print('Menu: ${menu[0].toJson()}');
               return NestedScrollView(
                 headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
