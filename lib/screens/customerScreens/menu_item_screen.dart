@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/cart_item.dart';
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/utils/colors.dart';
+import 'package:giki_eats/utils/variables.dart';
 import '../../services/database.dart';
 import '../../utils/loader.dart';
 
@@ -16,6 +19,19 @@ class MenuItemScreen extends StatefulWidget {
 
 class _MenuItemScreenState extends State<MenuItemScreen> {
   int quantity = 1;
+  String userId;
+  final _key = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUser();
+  }
+
+  _getCurrentUser() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    userId = user.uid;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +44,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
         if (snapshot.hasData) {
           MenuItem menuItem = snapshot.data;
           return Scaffold(
+            key: _key,
             backgroundColor: teal,
             body: Column(
               children: <Widget>[
@@ -48,7 +65,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                           color: white,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushNamed('/cart', arguments: [widget.restaurantId]);
+                          Navigator.of(context).pushNamed('/cart');
                         },
                       ),
                     ],
@@ -57,20 +74,17 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                   alignment: Alignment.center,
-                  child: Hero(
-                    tag: menuItem.name,
+                  child: CircleAvatar(
+                    radius: 105,
+                    backgroundColor: white,
                     child: CircleAvatar(
-                      radius: 105,
-                      backgroundColor: white,
+                      radius: 103,
+                      backgroundColor: teal,
                       child: CircleAvatar(
-                        radius: 103,
-                        backgroundColor: teal,
-                        child: CircleAvatar(
-                          radius: 100,
-                          backgroundImage: AssetImage(
-                            //Todo menuitem image
-                            'images/fast_food.png',
-                          ),
+                        radius: 100,
+                        backgroundImage: AssetImage(
+                          //Todo menuitem image
+                          'images/fast_food.png',
                         ),
                       ),
                     ),
@@ -152,12 +166,49 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                       elevation: 7.0,
                                       onPressed: () async {
                                         print('add to cart');
-                                        Navigator.of(context).pushNamed('/cart',
-                                            arguments: [
-                                              menuItem,
-                                              quantity,
-                                              widget.restaurantId
-                                            ]);
+                                        CartItem cartItem = CartItem(
+                                          menuItem,
+                                          userId,
+                                          widget.restaurantId,
+                                          menuItem.price * quantity,
+                                          quantity,
+                                        );
+                                        bool isUnique = true;
+                                        if (cart.isEmpty) {
+                                          cart.insert(0, cartItem);
+                                          for (var cartItem in cart) {
+                                            int index = cart.indexOf(cartItem);
+                                            menuIds.insert(
+                                              index,
+                                              cartItem.menuItem.id,
+                                            );
+                                            menuQty.insert(
+                                              index,
+                                              cartItem.quantity,
+                                            );
+                                          }
+                                        } else {
+                                          for (var cartitem in cart) {
+                                            if (isUnique) {
+                                              if (cartitem.menuItem.id == cartItem.menuItem.id) {
+                                                int index = cart.indexOf(cartitem);
+                                                cart[index] = cartItem;
+                                                isUnique = false;
+                                              } else {
+                                                isUnique = true;
+                                              }
+                                            }
+                                          }
+                                          if (isUnique) {
+                                            cart.add(cartItem);
+                                          }
+                                        }
+                                        _key.currentState.showSnackBar(
+                                          SnackBar(
+                                            content: Text("Added to Cart!"),
+                                            duration: const Duration(milliseconds: 1000),
+                                          ),
+                                        );
                                       },
                                       color: teal,
                                       child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/cart_item.dart';
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/screens/customerScreens/cart.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
@@ -90,23 +91,15 @@ class RouteGenerator {
         return _errorRoute();
 
       case '/cart':
-        List<dynamic> arguments = args;
-        if (arguments.length == 3) {
-          if (arguments[0] is MenuItem &&
-              arguments[1] is int &&
-              arguments[2] is String) {
-            return MaterialPageRoute(
-              builder: (context) => Cart(
-                menuItem: arguments[0],
-                quantity: arguments[1],
-                restaurantId: arguments[2],
-              ),
-            );
-          }
-        } else if (arguments.length == 1){
-          if(arguments[0] is String){
-            return MaterialPageRoute(builder: (context) => Cart(restaurantId: arguments[0]));
-          }
+        // List<String> arguments = args;
+        if (args is CartItem) {
+          return MaterialPageRoute(
+            builder: (context) => Cart(
+              cartItem: args,
+            ),
+          );
+        } else {
+          return MaterialPageRoute(builder: (context) => Cart());
         }
         return _errorRoute();
 

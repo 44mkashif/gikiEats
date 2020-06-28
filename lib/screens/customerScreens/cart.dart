@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/cart_item.dart';
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/services/database.dart';
@@ -9,35 +10,23 @@ import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/utils/variables.dart';
 
 class Cart extends StatefulWidget {
-  final MenuItem menuItem;
-  final int quantity;
-  final String restaurantId;
+  final CartItem cartItem;
 
-  const Cart({Key key, this.menuItem, this.quantity, this.restaurantId})
-      : super(key: key);
+  const Cart({Key key, this.cartItem}) : super(key: key);
 
   @override
   _CartState createState() => _CartState();
 }
 
 class _CartState extends State<Cart> {
-  String userId;
-
-  @override
-  void initState() {
-    super.initState();
-    _getCurrentUser();
-  }
-
-  _getCurrentUser() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    userId = user.uid;
-  }
+  int totalAmount = 0;
+  DatabaseService _db = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<int> _total = ValueNotifier<int>(0);
-    if (menuIds.isEmpty && widget.menuItem == null) {
+    // ValueNotifier<int> _total = ValueNotifier<int>(0);
+    int _total = 0;
+    if (cart.isEmpty && widget.cartItem == null) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Cart'),
@@ -49,26 +38,23 @@ class _CartState extends State<Cart> {
         ),
       );
     } else {
-      if (widget.menuItem != null) {
-        bool isUnique;
-        if (menuIds.isEmpty && menuQty.isEmpty) {
-          menuIds.insert(0, widget.menuItem.id);
-          menuQty.insert(0, widget.quantity);
-        } else {
-          for (var menuId in menuIds) {
-            if (menuId == widget.menuItem.id) {
-              int index = menuIds.indexOf(menuId);
-              menuQty[index] = widget.quantity;
-              isUnique = false;
-            } else {
-              isUnique = true;
-            }
-          }
-          if (isUnique) {
-            menuIds.add(widget.menuItem.id);
-            menuQty.add(widget.quantity);
-          }
-        }
+      menuIds = [];
+      menuQty = [];
+      for (var cartItem in cart) {
+        int index = cart.indexOf(cartItem);
+        menuIds.insert(
+          index,
+          cartItem.menuItem.id,
+        );
+        menuQty.insert(
+          index,
+          cartItem.quantity,
+        );
+      }
+      //Calculate Total Amount
+      for (var cartItem in cart) {
+        print('cartItem: ${cartItem.toJson()}');
+        _total += cartItem.total;
       }
 
       return Scaffold(
@@ -81,23 +67,9 @@ class _CartState extends State<Cart> {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                itemCount: menuQty.length,
+                itemCount: cart.length,
                 itemBuilder: (context, index) {
-                  DatabaseService _db = DatabaseService(
-                      restaurantId: widget.restaurantId,
-                      menuItemId: menuIds[index]);
-                  return StreamBuilder(
-                    stream: _db.menuItem,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        _total.value += (snapshot.data.price * menuQty[index]);
-                        print('total: $_total');
-                        return menuItemContainer(snapshot.data, menuQty[index]);
-                      } else {
-                        return Loading();
-                      }
-                    },
-                  );
+                  return menuItemContainer(context, cart[index]);
                 },
               ),
             ),
@@ -116,11 +88,12 @@ class _CartState extends State<Cart> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    ValueListenableBuilder<int>(
-                      valueListenable: _total,
-                      builder: (context, value, _) {
+                    FutureBuilder(
+                      future: Future.delayed(
+                          const Duration(milliseconds: 500), () {}),
+                      builder: (context, snapshot) {
                         return Text(
-                          value.toString(),
+                          _total.toString(),
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
@@ -141,7 +114,47 @@ class _CartState extends State<Cart> {
                     ),
                     elevation: 7.0,
                     onPressed: () {
-                      print('object');
+                      print('Place order');
+                      //Todo: Inout Location
+                      for (var index = 0; index < menuIds.length; index++) {
+                        print(
+                            'menuId: $index ${menuIds[index]}  menuQty: $index ${menuQty[index]}');
+                      }
+                      Order order = Order(
+                        cart[0].restaurantId,
+                        cart[0].userId,
+                        'ORDERED',
+                        'Hostel 3',
+                        _total,
+                        Timestamp.now(),
+                        null,
+                        menuIds,
+                        menuQty,
+                      );
+                      _db.createOrder(order);
+                      cart = [];
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          // return object of type Dialog
+                          return AlertDialog(
+                            title: new Text("Order Placed"),
+                            content: new Text(
+                                "Your order has been placed successfully"),
+                            actions: <Widget>[
+                              // usually buttons at the bottom of the dialog
+                              new FlatButton(
+                                child: new Text("Close"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.pushReplacementNamed(
+                                      context, '/cart');
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     color: teal,
                     child: Text(
@@ -163,7 +176,7 @@ class _CartState extends State<Cart> {
   }
 }
 
-Widget menuItemContainer(MenuItem menuItem, int quantity) {
+Widget menuItemContainer(BuildContext context, CartItem cartItem) {
   return Card(
     margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
     elevation: 4,
@@ -176,20 +189,17 @@ Widget menuItemContainer(MenuItem menuItem, int quantity) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            child: Hero(
-              tag: menuItem.name,
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: teal,
               child: CircleAvatar(
-                radius: 55,
-                backgroundColor: teal,
+                radius: 52,
+                backgroundColor: white,
                 child: CircleAvatar(
-                  radius: 52,
-                  backgroundColor: white,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(
-                      //Todo menuitem image
-                      'images/fast_food.png',
-                    ),
+                  radius: 50,
+                  backgroundImage: AssetImage(
+                    //Todo menuitem image
+                    'images/fast_food.png',
                   ),
                 ),
               ),
@@ -203,7 +213,7 @@ Widget menuItemContainer(MenuItem menuItem, int quantity) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  menuItem.name,
+                  cartItem.menuItem.name,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -216,7 +226,7 @@ Widget menuItemContainer(MenuItem menuItem, int quantity) {
                   height: 5,
                 ),
                 Text(
-                  'Rs. ${menuItem.price.toString()}',
+                  'Rs. ${cartItem.menuItem.price.toString()}',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -228,7 +238,7 @@ Widget menuItemContainer(MenuItem menuItem, int quantity) {
                   height: 5,
                 ),
                 Text(
-                  'Quantity: $quantity',
+                  'Quantity: ${cartItem.quantity}',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 16,
@@ -239,7 +249,7 @@ Widget menuItemContainer(MenuItem menuItem, int quantity) {
                   height: 5,
                 ),
                 Text(
-                  'Subtotal: Rs. ${menuItem.price * quantity}',
+                  'Subtotal: Rs. ${cartItem.total}',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -260,7 +270,36 @@ Widget menuItemContainer(MenuItem menuItem, int quantity) {
                   color: Colors.red,
                 ),
                 onPressed: () {
-                  print('delete');
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      // return object of type Dialog
+                      return AlertDialog(
+                        title: new Text("Remove Item"),
+                        content: new Text(
+                            "Are you sure you want to remove this item from the cart."),
+                        actions: <Widget>[
+                          new RaisedButton(
+                            child: new Text("Yes"),
+                            color: Colors.red,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              int index = cart.indexOf(cartItem);
+                              cart.removeAt(index);
+                              Navigator.pushReplacementNamed(context, '/cart');
+                            },
+                          ),
+                          new RaisedButton(
+                            child: new Text("Close"),
+                            color: teal,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 }),
           )
         ],

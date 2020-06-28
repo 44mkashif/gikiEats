@@ -31,7 +31,10 @@ class DatabaseService {
 
   Future createOrder(Order order) async {
     try {
-      await _ordersCollectionReference.add(order.toJson());
+      await _ordersCollectionReference.add(order.toJson()).then((value) => {
+        _ordersCollectionReference.document(value.documentID).updateData({"id": value.documentID})
+      });
+      return true;
     } catch (e) {
       return e.message;
     }
