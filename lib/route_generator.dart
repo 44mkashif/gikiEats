@@ -4,6 +4,7 @@ import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/screens/customerScreens/cart.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
+import 'package:giki_eats/screens/customerScreens/orders.dart';
 import 'package:giki_eats/screens/customerScreens/rest_info.dart';
 import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
 import 'package:giki_eats/screens/login.dart';
@@ -91,15 +92,20 @@ class RouteGenerator {
         return _errorRoute();
 
       case '/cart':
-        // List<String> arguments = args;
         if (args is CartItem) {
           return MaterialPageRoute(
             builder: (context) => Cart(
               cartItem: args,
             ),
           );
-        } else {
-          return MaterialPageRoute(builder: (context) => Cart());
+        }
+        return MaterialPageRoute(builder: (context) => Cart());
+
+      case '/myOrders':
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (context) => MyOrders(userId: args),
+          );
         }
         return _errorRoute();
 

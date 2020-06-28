@@ -38,8 +38,8 @@ class Order {
       'total': total,
       'orderedOn': orderedOn,
       'acceptedOn': acceptedOn,
-      'menuIDs': menuIDs.toString(),
-      'menuQty': menuQty.toString()
+      'menuIDs': menuIDs,
+      'menuQty': menuQty
     };
   }
 }
