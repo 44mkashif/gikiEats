@@ -105,6 +105,13 @@ class DatabaseService {
         .map(_orderListFromSnapshot);
   }
 
+  Stream<List<Order>> get ordersDataForUser {
+      return _ordersCollectionReference
+        .where('userID', isEqualTo: userId)
+        .snapshots()
+        .map(_orderListFromSnapshot);
+  }
+
   Stream<List<MenuItem>> get menuItemDataForOrderDetails {
       return _restaurantsCollectionReference
         .document(restaurantId)

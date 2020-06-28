@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/cart_item.dart';
-import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
-import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/utils/variables.dart';
 
 class Cart extends StatefulWidget {
@@ -51,9 +48,11 @@ class _CartState extends State<Cart> {
           cartItem.quantity,
         );
       }
+      print('menuIds: ${menuIds.runtimeType}');
+      print('menuQty: ${menuQty.runtimeType}');
+
       //Calculate Total Amount
       for (var cartItem in cart) {
-        print('cartItem: ${cartItem.toJson()}');
         _total += cartItem.total;
       }
 
@@ -115,11 +114,7 @@ class _CartState extends State<Cart> {
                     elevation: 7.0,
                     onPressed: () {
                       print('Place order');
-                      //Todo: Inout Location
-                      for (var index = 0; index < menuIds.length; index++) {
-                        print(
-                            'menuId: $index ${menuIds[index]}  menuQty: $index ${menuQty[index]}');
-                      }
+                      //Todo: Input Location
                       Order order = Order(
                         cart[0].restaurantId,
                         cart[0].userId,
@@ -147,8 +142,7 @@ class _CartState extends State<Cart> {
                                 child: new Text("Close"),
                                 onPressed: () {
                                   Navigator.of(context).pop();
-                                  Navigator.pushReplacementNamed(
-                                      context, '/cart');
+                                  Navigator.of(context).pushReplacementNamed('/cart');
                                 },
                               ),
                             ],
@@ -286,7 +280,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                               Navigator.of(context).pop();
                               int index = cart.indexOf(cartItem);
                               cart.removeAt(index);
-                              Navigator.pushReplacementNamed(context, '/cart');
+                              Navigator.of(context).pushReplacementNamed('/cart');
                             },
                           ),
                           new RaisedButton(
