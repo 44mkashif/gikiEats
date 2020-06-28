@@ -56,8 +56,7 @@ class CustomerDrawer extends StatelessWidget {
             leading: Icon(Icons.shopping_cart),
             title: Text('My Orders'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.of(context).pushNamed('/myOrders', arguments: user.id);
             },
           ),
           Divider(

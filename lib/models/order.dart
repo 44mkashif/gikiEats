@@ -12,7 +12,7 @@ class Order {
   List<String> menuIDs;
   List<int> menuQty;
 
-  Order(this.id, this.restaurantID, this.userID, this.status, this.toLocation, this.total, this.orderedOn,
+  Order(this.restaurantID, this.userID, this.status, this.toLocation, this.total, this.orderedOn,
       this.acceptedOn, this.menuIDs, this.menuQty);
 
   Order.fromSnapshot(QuerySnapshot snapshot) {
@@ -38,8 +38,8 @@ class Order {
       'total': total,
       'orderedOn': orderedOn,
       'acceptedOn': acceptedOn,
-      'menuIDs': menuIDs.toString(),
-      'menuQty': menuQty.toString()
+      'menuIDs': menuIDs,
+      'menuQty': menuQty
     };
   }
 }

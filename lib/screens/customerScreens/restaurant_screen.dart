@@ -192,6 +192,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                       child: CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage(
+                          //Todo menuitem image
                           'images/fast_food.png',
                         ),
                       ),
