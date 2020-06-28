@@ -34,11 +34,22 @@ class DatabaseService {
 
   Future changeOrderStatus(String orderId, String updatedStatus) async{
     try{
-      await _ordersCollectionReference
-      .document(orderId)
-      .updateData({
-        "status": updatedStatus
-      });
+      if (updatedStatus == 'ACCEPTED'){
+        await _ordersCollectionReference
+        .document(orderId)
+        .updateData({
+          "status": updatedStatus,
+          "acceptedOn": FieldValue.serverTimestamp()
+        });
+      }
+      else{
+        await _ordersCollectionReference
+        .document(orderId)
+        .updateData({
+          "status": updatedStatus
+        });
+      }
+      
     }catch(e){
       return e.message;
     }
@@ -65,8 +76,8 @@ class DatabaseService {
           .collection("menu")
           .document(menuItemId)
           .updateData({
-        "active": 0,
-      });
+            "active": 0,
+          });
     } catch (e) {
       return e.message;
     }

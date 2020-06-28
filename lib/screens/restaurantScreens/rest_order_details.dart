@@ -167,7 +167,7 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
                         ),
                         SizedBox(height: 10),
                         Align(
-                          alignment: Alignment.bottomRight,
+                          alignment: Alignment.bottomCenter,
                           child:
                           RichText(
                             text: new TextSpan(
