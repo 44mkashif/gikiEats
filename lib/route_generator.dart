@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:giki_eats/models/cart_item.dart';
 import 'package:giki_eats/models/menu_item.dart';
+import 'package:giki_eats/screens/customerScreens/cart.dart';
 import 'package:giki_eats/screens/customerScreens/customer_home.dart';
 import 'package:giki_eats/screens/customerScreens/menu_item_screen.dart';
 import 'package:giki_eats/screens/customerScreens/rest_info.dart';
@@ -51,14 +53,13 @@ class RouteGenerator {
 
       case '/restOrders':
         return MaterialPageRoute(builder: (_) => RestaurantOrders());
-        
-      case '/restOrderDetails':
-          if (args is Order) {
-            return MaterialPageRoute(
-                builder: (context) => RestaurantOrderDetails(order: args));
-          }
-          return _errorRoute();
 
+      case '/restOrderDetails':
+        if (args is Order) {
+          return MaterialPageRoute(
+              builder: (context) => RestaurantOrderDetails(order: args));
+        }
+        return _errorRoute();
 
       case '/restMenu':
         return MaterialPageRoute(builder: (_) => RestaurantMenu());
@@ -84,7 +85,21 @@ class RouteGenerator {
         List<String> arguments = args;
         if (arguments[0] is String && arguments[1] is String) {
           return MaterialPageRoute(
-              builder: (context) => MenuItemScreen(restaurantId: arguments[0],menuItemId: arguments[1]));
+              builder: (context) => MenuItemScreen(
+                  restaurantId: arguments[0], menuItemId: arguments[1]));
+        }
+        return _errorRoute();
+
+      case '/cart':
+        // List<String> arguments = args;
+        if (args is CartItem) {
+          return MaterialPageRoute(
+            builder: (context) => Cart(
+              cartItem: args,
+            ),
+          );
+        } else {
+          return MaterialPageRoute(builder: (context) => Cart());
         }
         return _errorRoute();
 
