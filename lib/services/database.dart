@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
+import 'package:path/path.dart';
 
 class DatabaseService {
   final String userId;
@@ -27,6 +31,45 @@ class DatabaseService {
     } catch (e) {
       return e.message;
     }
+  }
+  Future createMenu(MenuItem menuItem) async {
+    try{
+      await _restaurantsCollectionReference
+          .document(restaurantId)
+          .collection("menu")
+          .add(menuItem.toJson())
+          .then((value) => {
+            _restaurantsCollectionReference
+                .document(restaurantId)
+                .collection("menu")
+                .document(value.documentID)
+                .updateData({
+              "id": value.documentID,
+            })
+      });
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future deleteMenuItem(String menuItemId) async {
+    try {
+      await _restaurantsCollectionReference
+          .document(restaurantId)
+          .collection("menu")
+          .document(menuItemId)
+          .delete();
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future uploadImage(String fileName, File _image) async{
+
+    final StorageReference storageReference = FirebaseStorage.instance.ref().child(fileName);
+    final StorageUploadTask storageUploadTask = storageReference.putFile(_image);
+    final StorageTaskSnapshot storageTaskSnapshot = await storageUploadTask.onComplete;
+
   }
 
   Future createOrder(Order order) async {

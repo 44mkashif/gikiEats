@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
@@ -263,8 +265,8 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
                       backgroundColor: white,
                       child: CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage(
-                          'images/fast_food.png',
+                        backgroundImage: FileImage(
+                          File(menuItem.image),
                         ),
                       ),
                     ),

@@ -8,6 +8,7 @@ import 'package:giki_eats/screens/customerScreens/orders.dart';
 import 'package:giki_eats/screens/customerScreens/rest_info.dart';
 import 'package:giki_eats/screens/customerScreens/restaurant_screen.dart';
 import 'package:giki_eats/screens/login.dart';
+import 'package:giki_eats/screens/restaurantScreens/create_menu.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_order_details.dart';
 import 'package:giki_eats/screens/restaurantScreens/add_menu.dart';
 import 'package:giki_eats/screens/restaurantScreens/rest_menu.dart';
@@ -67,6 +68,9 @@ class RouteGenerator {
 
       case '/addMenu':
         return MaterialPageRoute(builder: (_) => AddMenu());
+
+      case '/createMenu':
+        return MaterialPageRoute(builder: (_) => CreateMenuItem());
 
       case '/restaurantScreen':
         if (args is String) {
