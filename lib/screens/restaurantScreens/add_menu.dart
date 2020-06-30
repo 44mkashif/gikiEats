@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/order.dart';
@@ -84,9 +85,8 @@ class _AddMenu extends State<AddMenu> {
 
                             //main foodItem
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(18,30,18,0),
+                              padding: const EdgeInsets.fromLTRB(100,30,18,0),
                               child: Container(
-                                alignment: Alignment.center,
                                 child: Text(
                                   '${menuItem.name}',
                                   style: TextStyle(
@@ -101,9 +101,8 @@ class _AddMenu extends State<AddMenu> {
 
                             //price
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0,60,70,18),
+                              padding: const EdgeInsets.fromLTRB(100,60,70,18),
                               child: Container(
-                                alignment: Alignment.center,
                                 child: Text(
                                   'Rs: ${menuItem.price}',
                                   style: TextStyle(
@@ -133,8 +132,8 @@ class _AddMenu extends State<AddMenu> {
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(40),
-                                  child: Image.asset(
-                                    "images/fast_food.png",
+                                  child: Image.file(
+                                    File(menuItem.image),
                                     height: 80,
                                     width: 80,
                                     fit: BoxFit.fill,
@@ -161,15 +160,36 @@ class _AddMenu extends State<AddMenu> {
                                     ),
                                   ],
                                 ),
-                                child: GestureDetector(
-                                  child: Icon(
-                                    Icons.add,
-                                    color: teal,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        child: Icon(
+                                          Icons.add,
+                                          color: teal,
+                                        ),
+                                        onTap: () {
+                                          print('${menuItem.name} is activated...');
+                                          _db.activateMenuItem(menuItem.id);
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      GestureDetector(
+                                        child: Icon(
+                                          Icons.delete,
+                                          size: 22,
+                                          color: teal,
+                                        ),
+                                        onTap: () {
+                                          _db.deleteMenuItem(menuItem.id);
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  onTap: () {
-                                    print('${menuItem.name} is activated...');
-                                    _db.activateMenuItem(menuItem.id);
-                                  },
                                 ),
                               ),
                             ),
@@ -184,6 +204,13 @@ class _AddMenu extends State<AddMenu> {
               return Loading();
             }
           }
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.create),
+        backgroundColor: teal,
+        onPressed: () {
+          Navigator.pushNamed(context, '/createMenu');
+        },
       ),
     );
   }

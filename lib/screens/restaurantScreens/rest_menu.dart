@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/order.dart';
@@ -131,8 +132,8 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(40),
-                                child: Image.asset(
-                                  "images/fast_food.png",
+                                child: Image.file(
+                                  File(menuItem.image),
                                   height: 80,
                                   width: 80,
                                   fit: BoxFit.fill,
