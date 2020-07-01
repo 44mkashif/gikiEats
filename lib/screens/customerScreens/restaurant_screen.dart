@@ -42,7 +42,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
           return Scaffold(
             backgroundColor: white,
             body: StreamBuilder(
-              stream: _db.menu,
+              stream: _db.getActivatedMenuItems,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   menu = snapshot.data;
@@ -90,7 +90,9 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                             IconButton(
                               icon: Icon(Icons.info),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/restaurantInfo', arguments: widget.restaurantId);
+                                Navigator.of(context).pushNamed(
+                                    '/restaurantInfo',
+                                    arguments: widget.restaurantId);
                               },
                             ),
                           ],
@@ -171,8 +173,8 @@ class _RestaurantScreenState extends State<RestaurantScreen>
         splashColor: teal.withOpacity(0.3),
         onTap: () {
           print('${menuItem.name} is tapped');
-          Navigator.of(context)
-              .pushNamed('/menuItemScreen', arguments: [widget.restaurantId,menuItem.id]);
+          Navigator.of(context).pushNamed('/menuItemScreen',
+              arguments: [restaurant, menuItem.id]);
         },
         child: Container(
           padding: EdgeInsets.fromLTRB(15, 12, 15, 12),
@@ -187,16 +189,38 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                     radius: 55,
                     backgroundColor: teal,
                     child: CircleAvatar(
-                      radius: 52,
-                      backgroundColor: white,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(
-                          //Todo menuitem image
-                          'images/fast_food.png',
+                        radius: 52,
+                        backgroundColor: white,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(menuItem.image),
+                        )
+                        // FutureBuilder(
+                        //   future: downloadImage(menuItem.image),
+                        //   builder: (BuildContext context, snapshot) {
+                        //     print('snap: ${snapshot.data}');
+                        //     if (snapshot.hasData) {
+                        //       return CircleAvatar(
+                        //         radius: 50,
+                        //         backgroundImage: NetworkImage(snapshot.data),
+                        //       );
+                        //     } else {
+                        //       String image;
+                        //       if(menuItem.category == 'Desi'){
+                        //         image = 'desi_food.jpg';
+                        //       } else if(menuItem.category == 'Fast Food'){
+                        //         image = 'fast_food.png';
+                        //       } else if(menuItem.category == 'Chinese'){
+                        //         image = 'chinese_food.jpg';
+                        //       }
+                        //       return CircleAvatar(
+                        //         radius: 50,
+                        //         backgroundImage: AssetImage('images/$image'),
+                        //       );
+                        //     }
+                        //   },
+                        // ),
                         ),
-                      ),
-                    ),
                   ),
                 ),
               ),
@@ -250,6 +274,13 @@ class _RestaurantScreenState extends State<RestaurantScreen>
       ),
     );
   }
+
+  // Future downloadImage(String imageUrl) async {
+  //   FirebaseStorage storage = FirebaseStorage.instance;
+  //   StorageReference reference = await storage.getReferenceFromUrl(imageUrl);
+  //   String downloadUrl = await reference.getDownloadURL();
+  //   return downloadUrl;
+  // }
 }
 
 class Delegate extends SliverPersistentHeaderDelegate {

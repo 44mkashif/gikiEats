@@ -24,34 +24,34 @@ class CustomerDrawer extends StatelessWidget {
             ),
             decoration: BoxDecoration(color: teal),
           ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-            indent: 20,
-            endIndent: 20,
-          ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-            indent: 20,
-            endIndent: 20,
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.home),
+          //   title: Text('Home'),
+          //   onTap: () {
+          //     // Update the state of the app.
+          //     // ...
+          //   },
+          // ),
+          // Divider(
+          //   height: 1,
+          //   color: Colors.grey,
+          //   indent: 20,
+          //   endIndent: 20,
+          // ),
+          // ListTile(
+          //   leading: Icon(Icons.person),
+          //   title: Text('Profile'),
+          //   onTap: () {
+          //     // Update the state of the app.
+          //     // ...
+          //   },
+          // ),
+          // Divider(
+          //   height: 1,
+          //   color: Colors.grey,
+          //   indent: 20,
+          //   endIndent: 20,
+          // ),
           ListTile(
             leading: Icon(Icons.shopping_cart),
             title: Text('My Orders'),
@@ -59,20 +59,20 @@ class CustomerDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed('/myOrders', arguments: user.id);
             },
           ),
-          Divider(
-            height: 1,
-            color: Colors.grey,
-            indent: 20,
-            endIndent: 20,
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
+          // Divider(
+          //   height: 1,
+          //   color: Colors.grey,
+          //   indent: 20,
+          //   endIndent: 20,
+          // ),
+          // ListTile(
+          //   leading: Icon(Icons.settings),
+          //   title: Text('Settings'),
+          //   onTap: () {
+          //     // Update the state of the app.
+          //     // ...
+          //   },
+          // ),
           Divider(
             height: 1,
             color: Colors.grey,

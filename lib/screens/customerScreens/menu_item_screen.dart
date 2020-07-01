@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/cart_item.dart';
 import 'package:giki_eats/models/menu_item.dart';
+import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/variables.dart';
 import '../../services/database.dart';
@@ -9,8 +10,8 @@ import '../../utils/loader.dart';
 
 class MenuItemScreen extends StatefulWidget {
   final String menuItemId;
-  final String restaurantId;
-  const MenuItemScreen({Key key, this.restaurantId, this.menuItemId})
+  final Restaurant restaurant;
+  const MenuItemScreen({Key key, this.restaurant, this.menuItemId})
       : super(key: key);
 
   @override
@@ -36,7 +37,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
   @override
   Widget build(BuildContext context) {
     DatabaseService _db = DatabaseService(
-        restaurantId: widget.restaurantId, menuItemId: widget.menuItemId);
+        restaurantId: restaurant.id, menuItemId: widget.menuItemId);
 
     return StreamBuilder(
       stream: _db.menuItem,
@@ -82,10 +83,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                       backgroundColor: teal,
                       child: CircleAvatar(
                         radius: 100,
-                        backgroundImage: AssetImage(
-                          //Todo menuitem image
-                          'images/fast_food.png',
-                        ),
+                        backgroundImage: NetworkImage(menuItem.image),
                       ),
                     ),
                   ),
@@ -169,9 +167,10 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                         CartItem cartItem = CartItem(
                                           menuItem,
                                           userId,
-                                          widget.restaurantId,
+                                          restaurant.id,
                                           menuItem.price * quantity,
                                           quantity,
+                                          restaurant.deliveryFee,
                                         );
                                         bool isUnique = true;
                                         if (cart.isEmpty) {

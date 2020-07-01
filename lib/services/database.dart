@@ -69,7 +69,7 @@ class DatabaseService {
     final StorageReference storageReference = FirebaseStorage.instance.ref().child(fileName);
     final StorageUploadTask storageUploadTask = storageReference.putFile(_image);
     final StorageTaskSnapshot storageTaskSnapshot = await storageUploadTask.onComplete;
-
+    return await storageReference.getDownloadURL();
   }
 
   Future createOrder(Order order) async {
@@ -162,6 +162,7 @@ class DatabaseService {
   Stream<List<Order>> get ordersDataForUser {
       return _ordersCollectionReference
         .where('userID', isEqualTo: userId)
+        .orderBy('orderedOn', descending: true)
         .snapshots()
         .map(_orderListFromSnapshot);
   }
@@ -228,6 +229,7 @@ class DatabaseService {
         doc.data['phoneNumber'],
         doc.data['image'],
         doc.data['time'],
+        doc.data['deliveryFee'],
       );
     }).toList();
   }

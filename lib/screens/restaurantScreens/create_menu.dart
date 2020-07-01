@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giki_eats/models/menu_item.dart';
@@ -250,9 +249,8 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
       menuItem.price = _price;
       menuItem.category = _category;
       menuItem.description = _description;
-      menuItem.image = _image.path.toString();
+      menuItem.image = await _db.uploadImage(basename(_image.path), _image);
       _db.createMenu(menuItem);
-      _db.uploadImage(basename(_image.path), _image);
     }
 
   }

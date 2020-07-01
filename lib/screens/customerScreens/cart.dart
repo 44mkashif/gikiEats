@@ -16,13 +16,14 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  int totalAmount = 0;
+  int _total = 0;
+  String _address;
   DatabaseService _db = DatabaseService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // ValueNotifier<int> _total = ValueNotifier<int>(0);
-    int _total = 0;
+    
     if (cart.isEmpty && widget.cartItem == null) {
       return Scaffold(
         appBar: AppBar(
@@ -48,13 +49,12 @@ class _CartState extends State<Cart> {
           cartItem.quantity,
         );
       }
-      print('menuIds: ${menuIds.runtimeType}');
-      print('menuQty: ${menuQty.runtimeType}');
 
       //Calculate Total Amount
       for (var cartItem in cart) {
         _total += cartItem.total;
       }
+      _total += cart[0].deliveryFee;
 
       return Scaffold(
         appBar: AppBar(
@@ -103,62 +103,90 @@ class _CartState extends State<Cart> {
                     ),
                   ],
                 ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  height: 60.0,
-                  width: double.infinity,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    elevation: 7.0,
-                    onPressed: () {
-                      print('Place order');
-                      //Todo: Input Location
-                      Order order = Order(
-                        cart[0].restaurantId,
-                        cart[0].userId,
-                        'ORDERED',
-                        'Hostel 3',
-                        _total,
-                        Timestamp.now(),
-                        null,
-                        menuIds,
-                        menuQty,
-                      );
-                      _db.createOrder(order);
-                      cart = [];
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          // return object of type Dialog
-                          return AlertDialog(
-                            title: new Text("Order Placed"),
-                            content: new Text(
-                                "Your order has been placed successfully"),
-                            actions: <Widget>[
-                              // usually buttons at the bottom of the dialog
-                              new FlatButton(
-                                child: new Text("Close"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pushReplacementNamed('/cart');
-                                },
+                Form(
+                  key: _formKey,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: TextFormField(
+                          validator: (input) {
+                            if (input.isEmpty) {
+                              return 'Address is required!';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.home),
+                            labelText: 'Address',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(100),
                               ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    color: teal,
-                    child: Text(
-                      "Place Order",
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          onSaved: (input) => _address = input,
+                        ),
                       ),
-                    ),
+                      Container(
+                        margin: EdgeInsets.all(10),
+                        height: 60.0,
+                        width: double.infinity,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          elevation: 7.0,
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
+                              Order order = Order(
+                                cart[0].restaurantId,
+                                cart[0].userId,
+                                'ORDERED',
+                                _address,
+                                _total,
+                                Timestamp.now(),
+                                null,
+                                menuIds,
+                                menuQty,
+                              );
+                              _db.createOrder(order);
+                              cart = [];
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: new Text("Order Placed"),
+                                    content: new Text(
+                                        "Your order has been placed successfully"),
+                                    actions: <Widget>[
+                                      new FlatButton(
+                                        child: new Text("Close"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context)
+                                              .pushReplacementNamed('/cart');
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          color: teal,
+                          child: Text(
+                            "Place Order",
+                            style: TextStyle(
+                              color: white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -191,10 +219,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                 backgroundColor: white,
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(
-                    //Todo menuitem image
-                    'images/fast_food.png',
-                  ),
+                  backgroundImage: NetworkImage(cartItem.menuItem.image),
                 ),
               ),
             ),
@@ -267,7 +292,6 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      // return object of type Dialog
                       return AlertDialog(
                         title: new Text("Remove Item"),
                         content: new Text(
@@ -280,7 +304,8 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                               Navigator.of(context).pop();
                               int index = cart.indexOf(cartItem);
                               cart.removeAt(index);
-                              Navigator.of(context).pushReplacementNamed('/cart');
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/cart');
                             },
                           ),
                           new RaisedButton(
@@ -301,17 +326,3 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
     ),
   );
 }
-
-// FirebaseUser user = await FirebaseAuth.instance.currentUser();
-// Order order = Order(
-//   orderId,
-//   widget.restaurantId,
-//   user.uid,
-//   'ORDERED',
-//   'Hostel 3',
-//   quantity,
-//   Timestamp.now(),
-//   null,
-//   menuIDs,
-//   menuQty,
-// );
