@@ -163,7 +163,6 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                       ),
                                       elevation: 7.0,
                                       onPressed: () async {
-                                        print('add to cart');
                                         CartItem cartItem = CartItem(
                                           menuItem,
                                           userId,
@@ -211,7 +210,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                       },
                                       color: teal,
                                       child: Text(
-                                        "Add to cart",
+                                        "Add $quantity item/s to cart",
                                         style: TextStyle(
                                           color: white,
                                           fontSize: 20,
