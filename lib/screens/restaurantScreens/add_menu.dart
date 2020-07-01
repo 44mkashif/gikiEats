@@ -132,52 +132,55 @@ class _AddMenu extends State<AddMenu> {
                             //rightSide Icons
                             Padding(
                               padding:
-                                  const EdgeInsets.fromLTRB(320, 18, 5, 18),
-                              child: Container(
-                                height: 80,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 12),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        child: Icon(
-                                          Icons.add,
-                                          color: teal,
-                                        ),
-                                        onTap: () {
-                                          print(
-                                              '${menuItem.name} is activated...');
-                                          _db.activateMenuItem(menuItem.id);
-                                        },
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      GestureDetector(
-                                        child: Icon(
-                                          Icons.delete,
-                                          size: 22,
-                                          color: teal,
-                                        ),
-                                        onTap: () {
-                                          _db.deleteMenuItem(menuItem.id);
-                                        },
+                                  const EdgeInsets.fromLTRB(0, 18, 10, 0),
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  height: 80,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.5),
+                                        spreadRadius: 1,
+                                        blurRadius: 7,
+                                        offset: Offset(0, 3),
                                       ),
                                     ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 12),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          child: Icon(
+                                            Icons.add,
+                                            color: teal,
+                                          ),
+                                          onTap: () {
+                                            print(
+                                                '${menuItem.name} is activated...');
+                                            _db.activateMenuItem(menuItem.id);
+                                          },
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        GestureDetector(
+                                          child: Icon(
+                                            Icons.delete,
+                                            size: 22,
+                                            color: teal,
+                                          ),
+                                          onTap: () {
+                                            _db.deleteMenuItem(menuItem.id);
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
