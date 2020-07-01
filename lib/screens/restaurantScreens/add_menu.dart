@@ -1,23 +1,18 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:giki_eats/models/order.dart';
-import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/utils/variables.dart';
 
 class AddMenu extends StatefulWidget {
-
-  AddMenu({Key key}) : super(key : key);
+  AddMenu({Key key}) : super(key: key);
 
   @override
   _AddMenu createState() => _AddMenu();
 }
 
 class _AddMenu extends State<AddMenu> {
-
   String titleText = 'Menu';
 
   @override
@@ -26,11 +21,12 @@ class _AddMenu extends State<AddMenu> {
     return Scaffold(
       body: StreamBuilder(
           stream: _db.getDeactivatedMenuItems,
-          builder: (context, snapshot){
-            if(snapshot.hasData){
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
               menu = snapshot.data;
               return NestedScrollView(
-                headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
                       expandedHeight: 150,
@@ -38,7 +34,8 @@ class _AddMenu extends State<AddMenu> {
                       pinned: true,
                       flexibleSpace: FlexibleSpaceBar(
                           centerTitle: true,
-                          title: Text("Add Menu",
+                          title: Text(
+                            "Add Menu",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.0,
@@ -54,26 +51,24 @@ class _AddMenu extends State<AddMenu> {
                 body: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.fromRGBO(0, 105, 92, 1),
-                          Color.fromRGBO(0, 135, 121, 1),
-                          Color.fromRGBO(81, 184, 160, 1),
-                          Color.fromRGBO(178, 224, 187, 1),
-                          Color.fromRGBO(253, 244, 179, 1),
-                        ],
-                      )
-                  ),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromRGBO(0, 105, 92, 1),
+                      Color.fromRGBO(0, 135, 121, 1),
+                      Color.fromRGBO(81, 184, 160, 1),
+                      Color.fromRGBO(178, 224, 187, 1),
+                      Color.fromRGBO(253, 244, 179, 1),
+                    ],
+                  )),
                   child: ListView(
                     children: <Widget>[
-                      for(var menuItem in menu)
+                      for (var menuItem in menu)
                         Stack(
                           children: <Widget>[
-
                             //main box
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(30,8,24,8),
+                              padding: const EdgeInsets.fromLTRB(30, 8, 24, 8),
                               child: Container(
                                 height: 100,
                                 decoration: BoxDecoration(
@@ -85,12 +80,13 @@ class _AddMenu extends State<AddMenu> {
 
                             //main foodItem
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(100,30,18,0),
+                              padding:
+                                  const EdgeInsets.fromLTRB(100, 30, 18, 0),
                               child: Container(
                                 child: Text(
                                   '${menuItem.name}',
                                   style: TextStyle(
-                                    fontSize: 22  ,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.w500,
                                     color: teal,
                                     letterSpacing: 1,
@@ -101,7 +97,8 @@ class _AddMenu extends State<AddMenu> {
 
                             //price
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(100,60,70,18),
+                              padding:
+                                  const EdgeInsets.fromLTRB(100, 60, 70, 18),
                               child: Container(
                                 child: Text(
                                   'Rs: ${menuItem.price}',
@@ -117,26 +114,16 @@ class _AddMenu extends State<AddMenu> {
 
                             //foodItem Image
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(5,18,0,18),
+                              padding: const EdgeInsets.fromLTRB(5, 18, 0, 18),
                               child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 5,
-                                      offset: Offset(0,3),
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: teal,
+                                  child: CircleAvatar(
+                                    radius: 38,
+                                    backgroundImage: NetworkImage(
+                                      menuItem.image,
                                     ),
-                                  ],
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(40),
-                                  child: Image.file(
-                                    File(menuItem.image),
-                                    height: 80,
-                                    width: 80,
-                                    fit: BoxFit.fill,
                                   ),
                                 ),
                               ),
@@ -144,7 +131,8 @@ class _AddMenu extends State<AddMenu> {
 
                             //rightSide Icons
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(320,18,5,18),
+                              padding:
+                                  const EdgeInsets.fromLTRB(320, 18, 5, 18),
                               child: Container(
                                 height: 80,
                                 width: 30,
@@ -156,7 +144,7 @@ class _AddMenu extends State<AddMenu> {
                                       color: Colors.black.withOpacity(0.5),
                                       spreadRadius: 1,
                                       blurRadius: 7,
-                                      offset: Offset(0,3),
+                                      offset: Offset(0, 3),
                                     ),
                                   ],
                                 ),
@@ -171,7 +159,8 @@ class _AddMenu extends State<AddMenu> {
                                           color: teal,
                                         ),
                                         onTap: () {
-                                          print('${menuItem.name} is activated...');
+                                          print(
+                                              '${menuItem.name} is activated...');
                                           _db.activateMenuItem(menuItem.id);
                                         },
                                       ),
@@ -199,12 +188,10 @@ class _AddMenu extends State<AddMenu> {
                   ),
                 ),
               );
-
             } else {
               return Loading();
             }
-          }
-      ),
+          }),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.create),
         backgroundColor: teal,

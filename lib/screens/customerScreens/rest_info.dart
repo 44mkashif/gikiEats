@@ -133,6 +133,27 @@ class RestaurantInfo extends StatelessWidget {
                                   ),
                                 ],
                               ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.attach_money,
+                                    color: teal,
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    'Rs. ${restaurant.deliveryFee} per delivery',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ],

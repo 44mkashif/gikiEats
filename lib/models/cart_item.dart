@@ -6,8 +6,9 @@ class CartItem {
   String restaurantId;
   int total;
   int quantity;
+  int deliveryFee;
 
-  CartItem(this.menuItem, this.userId, this.restaurantId, this.total, this.quantity);
+  CartItem(this.menuItem, this.userId, this.restaurantId, this.total, this.quantity, this.deliveryFee);
 
   Map<String, dynamic> toJson() {
     return {
@@ -16,6 +17,7 @@ class CartItem {
       'restaurantId': restaurantId,
       'total': total,
       'quantity': quantity,
+      'deliveryFee': deliveryFee,
     };
   }
 }
