@@ -14,7 +14,6 @@ class CreateMenuItem extends StatefulWidget {
 }
 
 class _CreateMenuItemState extends State<CreateMenuItem> {
-
   DatabaseService _db = new DatabaseService(restaurantId: restaurant.id);
   MenuItem menuItem = new MenuItem('', 0, '', 0, '', '', '');
 
@@ -43,20 +42,22 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
           ),
           backgroundColor: teal,
         ),
+        backgroundColor: white,
         body: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(0, 105, 92, 1),
-                    Color.fromRGBO(0, 135, 121, 1),
-                    Color.fromRGBO(81, 184, 160, 1),
-                    Color.fromRGBO(178, 224, 187, 1),
-                    Color.fromRGBO(253, 244, 179, 1),
-                  ],
-                )
+              color: white,
+              // gradient: LinearGradient(
+              //   begin: Alignment.topCenter,
+              //   end: Alignment.bottomCenter,
+              //   colors: [
+              //     Color.fromRGBO(0, 105, 92, 1),
+              //     Color.fromRGBO(0, 135, 121, 1),
+              //     Color.fromRGBO(81, 184, 160, 1),
+              //     Color.fromRGBO(178, 224, 187, 1),
+              //     Color.fromRGBO(253, 244, 179, 1),
+              //   ],
+              // )
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,41 +70,46 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                       child: ListView(
                         children: <Widget>[
                           Container(
-                            height: 50,
+                            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0,4,0,0),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'Food Name',
-                                  prefixIcon: Icon(Icons.fastfood),
-                                  border: InputBorder.none,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.fastfood),
+                                labelText: 'Food Name',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(100),
+                                  ),
                                 ),
-                                keyboardType: TextInputType.text,
-                                onSaved: (input) => _name = input,
                               ),
+                              keyboardType: TextInputType.text,
+                              onSaved: (input) => _name = input,
                             ),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Container(
-                            height: 50,
+                            
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0,4,0,0),
+                            child: Container(
+                              
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: 'Price',
-                                  prefixIcon: Icon(Icons.attach_money),
-                                  border: InputBorder.none,
+                                prefixIcon: Icon(Icons.attach_money),
+                                labelText: 'Price',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(100),
+                                  ),
                                 ),
+                              ),
                                 keyboardType: TextInputType.number,
                                 onSaved: (input) => _price = int.parse(input),
                               ),
@@ -113,19 +119,23 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                             height: 20,
                           ),
                           Container(
-                            height: 50,
+                            
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0,4,0,0),
+                            child: Container(
+                              
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  hintText: 'Description',
-                                  prefixIcon: Icon(Icons.text_fields),
-                                  border: InputBorder.none,
+                                prefixIcon: Icon(Icons.text_fields),
+                                labelText: 'Description',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(100),
+                                  ),
                                 ),
+                              ),
                                 keyboardType: TextInputType.text,
                                 onSaved: (input) => _description = input,
                               ),
@@ -135,17 +145,22 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                             height: 20,
                           ),
                           Container(
-                            height: 50,
+                            padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            // child: Container(
+                              // padding: const EdgeInsets.all(8.0),
                               child: DropdownButton(
                                 hint: Text('Choose Category'),
-                                underline: SizedBox(), // remove underline border
-                                isExpanded: true, // put arrow icons to right most
+                                underline:
+                                    SizedBox(), // remove underline border
+                                isExpanded:
+                                    true, // put arrow icons to right most
                                 value: _category,
                                 onChanged: (newInput) {
                                   setState(() {
@@ -153,26 +168,28 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                                     print('loc: $_category');
                                   });
                                 },
-                                items: _locations.map( (loc) {
+                                items: _locations.map((loc) {
                                   return DropdownMenuItem(
                                     child: Text(loc),
                                     value: loc,
                                   );
                                 }).toList(),
                               ),
-                            ),
+                            // ),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Container(
-                            height: 50,
+                            padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(5),
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(0,0,8,0),
+                            child: Container(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
@@ -185,7 +202,9 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                                   ),
                                   Flexible(
                                     child: Text(
-                                      (_image!=null) ? '${basename(_image.path)}' : 'Upload Image',
+                                      (_image != null)
+                                          ? '${basename(_image.path)}'
+                                          : 'Upload Image',
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -214,12 +233,11 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                                   'Create',
                                   style: TextStyle(
                                     fontSize: 19,
-                                    color: offwhite,
+                                    color: Colors.grey[50],
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              )
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -230,7 +248,6 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
   }
 
   Future getImage() async {
-
     // get image from gallery and assign it to img
     final img = await picker.getImage(source: ImageSource.gallery);
 
@@ -239,11 +256,10 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
       _image = File(img.path);
     });
   }
-  void createMenuItem () async {
 
+  void createMenuItem() async {
     _formKey.currentState.save();
-    if(_formKey.currentState.validate())
-    {
+    if (_formKey.currentState.validate()) {
       menuItem.name = _name;
       menuItem.active = 0;
       menuItem.price = _price;
@@ -252,8 +268,5 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
       menuItem.image = await _db.uploadImage(basename(_image.path), _image);
       _db.createMenu(menuItem);
     }
-
   }
-
-
 }

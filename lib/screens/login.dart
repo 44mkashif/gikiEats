@@ -71,60 +71,72 @@ class _LoginState extends State<Login> {
                           key: _formKey,
                           child: ListView(
                             children: <Widget>[
-                              TextFormField(
-                                validator: (input) {
-                                  if (input.isEmpty) {
-                                    return 'Email is required!';
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.email),
-                                  labelText: 'Email',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(100),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[50],
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: TextFormField(
+                                  validator: (input) {
+                                    if (input.isEmpty) {
+                                      return 'Email is required!';
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.email),
+                                    labelText: 'Email',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
                                     ),
                                   ),
+                                  onSaved: (input) => _email = input,
+                                  keyboardType: TextInputType.emailAddress,
                                 ),
-                                onSaved: (input) => _email = input,
-                                keyboardType: TextInputType.emailAddress,
                               ),
                               SizedBox(
                                 height: 15,
                               ),
-                              TextFormField(
-                                validator: (input) {
-                                  if (input.length < 6) {
-                                    return "Password must be at least 6 characters long!";
-                                  }
-                                },
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.lock),
-                                  labelText: 'Password',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(100),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[50],
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: TextFormField(
+                                  validator: (input) {
+                                    if (input.length < 6) {
+                                      return "Password must be at least 6 characters long!";
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.lock),
+                                    labelText: 'Password',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
                                     ),
                                   ),
+                                  onSaved: (input) => _password = input,
+                                  obscureText: true,
                                 ),
-                                onSaved: (input) => _password = input,
-                                obscureText: true,
                               ),
                               SizedBox(
                                 height: 10.0,
                               ),
                               Visibility(
                                 // padding: EdgeInsets.all(12.0),
-                                  visible: authError,
-                                  child: Text(
-                                    'Email or Password is Incorrect',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                visible: authError,
+                                child: Text(
+                                  'Email or Password is Incorrect',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
+                                ),
                               ),
                               SizedBox(
                                 height: 15.0,
@@ -146,7 +158,6 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               ),
-                            
                               SizedBox(
                                 height: 30.0,
                               ),
@@ -193,7 +204,8 @@ class _LoginState extends State<Login> {
                                     alignment: Alignment.center,
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.of(context).pushReplacementNamed('/signup');
+                                        Navigator.of(context)
+                                            .pushReplacementNamed('/signup');
                                       },
                                       child: Text(
                                         'Create Account',

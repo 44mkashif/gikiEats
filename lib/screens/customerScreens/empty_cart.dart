@@ -9,6 +9,7 @@ class EmptyCart extends StatelessWidget {
         title: Text('Cart'),
         centerTitle: true,
       ),
+      backgroundColor: white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

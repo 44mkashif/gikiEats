@@ -24,7 +24,6 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
-    
     if (cart.isEmpty && widget.cartItem == null) {
       return EmptyCart();
     } else {
@@ -54,6 +53,7 @@ class _CartState extends State<Cart> {
           title: Text('Cart'),
           centerTitle: true,
         ),
+        backgroundColor: white,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -103,22 +103,28 @@ class _CartState extends State<Cart> {
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.all(10),
-                        child: TextFormField(
-                          validator: (input) {
-                            if (input.isEmpty) {
-                              return 'Address is required!';
-                            }
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.home),
-                            labelText: 'Address',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(100),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return 'Address is required!';
+                              }
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.home),
+                              labelText: 'Address',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
                               ),
                             ),
+                            onSaved: (input) => _address = input,
                           ),
-                          onSaved: (input) => _address = input,
                         ),
                       ),
                       Container(
@@ -134,15 +140,15 @@ class _CartState extends State<Cart> {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               Order order = Order(
-                                cart[0].restaurantId,
-                                cart[0].userId,
-                                'ORDERED',
-                                _address,
-                                _total,
-                                Timestamp.now(),
-                                null,
-                                menuIds,
-                                menuQty,
+                                restaurantID: cart[0].restaurantId,
+                                userID: cart[0].userId,
+                                status: 'ORDERED',
+                                toLocation: _address,
+                                total: _total,
+                                orderedOn: Timestamp.now(),
+                                acceptedOn: null,
+                                menuIDs: menuIds,
+                                menuQty: menuQty,
                               );
                               _db.createOrder(order);
                               cart = [];
@@ -196,7 +202,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
     margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
     elevation: 4,
     shadowColor: grey,
-    color: offwhite,
+    color: Colors.grey[50],
     child: Container(
       padding: EdgeInsets.fromLTRB(15, 12, 15, 12),
       child: Row(

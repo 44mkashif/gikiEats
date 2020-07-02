@@ -168,7 +168,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
       margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
       elevation: 4,
       shadowColor: grey,
-      color: offwhite,
+      color: Colors.grey[50],
       child: InkWell(
         splashColor: teal.withOpacity(0.3),
         onTap: () {

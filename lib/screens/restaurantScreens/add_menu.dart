@@ -19,6 +19,7 @@ class _AddMenu extends State<AddMenu> {
   Widget build(BuildContext context) {
     DatabaseService _db = new DatabaseService(restaurantId: restaurant.id);
     return Scaffold(
+      backgroundColor: white,
       body: StreamBuilder(
           stream: _db.getDeactivatedMenuItems,
           builder: (context, snapshot) {
@@ -50,17 +51,19 @@ class _AddMenu extends State<AddMenu> {
                 },
                 body: Container(
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromRGBO(0, 105, 92, 1),
-                      Color.fromRGBO(0, 135, 121, 1),
-                      Color.fromRGBO(81, 184, 160, 1),
-                      Color.fromRGBO(178, 224, 187, 1),
-                      Color.fromRGBO(253, 244, 179, 1),
-                    ],
-                  )),
+                    color: white,
+                    // gradient: LinearGradient(
+                    //   begin: Alignment.topCenter,
+                    //   end: Alignment.bottomCenter,
+                    //   colors: [
+                    //     Color.fromRGBO(0, 105, 92, 1),
+                    //     Color.fromRGBO(0, 135, 121, 1),
+                    //     Color.fromRGBO(81, 184, 160, 1),
+                    //     Color.fromRGBO(178, 224, 187, 1),
+                    //     Color.fromRGBO(253, 244, 179, 1),
+                    //   ],
+                    // ),
+                  ),
                   child: ListView(
                     children: <Widget>[
                       for (var menuItem in menu)
@@ -72,8 +75,15 @@ class _AddMenu extends State<AddMenu> {
                               child: Container(
                                 height: 100,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
+                                  color: Colors.grey[100],
                                   borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.5),
+                                      offset: Offset(0, 3),
+                                      blurRadius: 7,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -131,29 +141,29 @@ class _AddMenu extends State<AddMenu> {
 
                             //rightSide Icons
                             Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(0, 18, 10, 0),
+                              padding: const EdgeInsets.fromLTRB(0, 18, 10, 0),
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
                                   height: 80,
                                   width: 30,
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
+                                    color: white,
                                     borderRadius: BorderRadius.circular(15),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.5),
+                                        color: Colors.black.withOpacity(0.3),
                                         spreadRadius: 1,
                                         blurRadius: 7,
-                                        offset: Offset(0, 3),
+                                        offset: Offset(3, 3),
                                       ),
                                     ],
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: 12),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: <Widget>[
                                         GestureDetector(
                                           child: Icon(

@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:giki_eats/models/menu_item.dart';
 import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/models/user.dart';
-import 'package:path/path.dart';
 
 class DatabaseService {
   final String userId;
@@ -162,7 +160,7 @@ class DatabaseService {
   Stream<List<Order>> get ordersDataForUser {
       return _ordersCollectionReference
         .where('userID', isEqualTo: userId)
-        .orderBy('orderedOn', descending: true)
+        // .orderBy('orderedOn', descending: true)
         .snapshots()
         .map(_orderListFromSnapshot);
   }
@@ -237,15 +235,16 @@ class DatabaseService {
   List<Order> _orderListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Order(
-          doc.data['restaurantID'],
-          doc.data['userID'],
-          doc.data['status'],
-          doc.data['toLocation'],
-          doc.data['total'],
-          doc.data['orderedOn'],
-          doc.data['acceptedOn'],
-          List.from(doc.data['menuIDs']),
-          List.from(doc.data['menuQty'])
+          id: doc.data['id'],
+          restaurantID: doc.data['restaurantID'],
+          userID: doc.data['userID'],
+          status: doc.data['status'],
+          toLocation: doc.data['toLocation'],
+          total:doc.data['total'],
+          orderedOn:doc.data['orderedOn'],
+          acceptedOn: doc.data['acceptedOn'],
+          menuIDs:List.from(doc.data['menuIDs']),
+          menuQty:List.from(doc.data['menuQty'])
       );
     }).toList();
   }

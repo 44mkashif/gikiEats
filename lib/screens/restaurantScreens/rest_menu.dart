@@ -19,6 +19,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
   Widget build(BuildContext context) {
     DatabaseService _db = new DatabaseService(restaurantId: restaurant.id);
     return Scaffold(
+      backgroundColor: white,
       body: StreamBuilder(
           stream: _db.getActivatedMenuItems,
           builder: (context, snapshot) {
@@ -50,118 +51,130 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                 },
                 body: Container(
                   decoration: BoxDecoration(
-                    // color: white,
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromRGBO(0, 105, 92, 1),
-                        Color.fromRGBO(0, 135, 121, 1),
-                        Color.fromRGBO(81, 184, 160, 1),
-                        Color.fromRGBO(178, 224, 187, 1),
-                        Color.fromRGBO(253, 244, 179, 1),
-                      ],
-                    ),
+                    color: white,
+                    // gradient: LinearGradient(
+                    //   begin: Alignment.topCenter,
+                    //   end: Alignment.bottomCenter,
+                    //   colors: [
+                    //     Color.fromRGBO(0, 105, 92, 1),
+                    //     Color.fromRGBO(0, 135, 121, 1),
+                    //     Color.fromRGBO(81, 184, 160, 1),
+                    //     Color.fromRGBO(178, 224, 187, 1),
+                    //     Color.fromRGBO(253, 244, 179, 1),
+                    //   ],
+                    // ),
                   ),
                   child: ListView(
                     children: <Widget>[
                       for (var menuItem in menu)
-                        Stack(
-                          children: <Widget>[
-                            //main box
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(30, 8, 24, 8),
-                              child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: offwhite,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                            ),
-
-                            //main foodItem
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(100, 30, 18, 0),
-                              child: Container(
-                                child: Text(
-                                  '${menuItem.name}',
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w500,
-                                    color: teal,
-                                    letterSpacing: 1,
+                        Container(
+                          child: Stack(
+                            children: <Widget>[
+                              //main box
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 8, 24, 8),
+                                child: Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[100],
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.5),
+                                        offset: Offset(0, 3),
+                                        blurRadius: 7,
+                                      ),
+                                    ],
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
                               ),
-                            ),
 
-                            //price
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(100, 60, 70, 18),
-                              child: Container(
-                                child: Text(
-                                  'Rs: ${menuItem.price}',
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w500,
-                                    color: teal,
-                                    letterSpacing: 1,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            //foodItem Image
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 18, 0, 18),
-                              child: Container(
-                                child: CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: teal,
-                                  child: CircleAvatar(
-                                    radius: 38,
-                                    backgroundImage:
-                                        NetworkImage(menuItem.image),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            //rightSide Icon
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(320, 18, 5, 18),
-                              child: Container(
-                                height: 80,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(15),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 7,
-                                      offset: Offset(0, 3),
+                              //main foodItem
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(100, 30, 18, 0),
+                                child: Container(
+                                  child: Text(
+                                    '${menuItem.name}',
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                      color: teal,
+                                      letterSpacing: 1,
                                     ),
-                                  ],
-                                ),
-                                child: GestureDetector(
-                                  child: Icon(
-                                    Icons.remove,
-                                    color: teal,
                                   ),
-                                  onTap: () {
-                                    print('${menuItem.name} is deactivated..');
-                                    _db.deactivateMenuItem(menuItem.id);
-                                  },
                                 ),
                               ),
-                            ),
-                          ],
+
+                              //price
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(100, 60, 70, 18),
+                                child: Container(
+                                  child: Text(
+                                    'Rs: ${menuItem.price}',
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                      color: teal,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              //foodItem Image
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(5, 18, 0, 18),
+                                child: Container(
+                                  child: CircleAvatar(
+                                    radius: 40,
+                                    backgroundColor: teal,
+                                    child: CircleAvatar(
+                                      radius: 38,
+                                      backgroundImage:
+                                          NetworkImage(menuItem.image),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              //rightSide Icon
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(320, 18, 5, 18),
+                                child: Container(
+                                  height: 80,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.3),
+                                        spreadRadius: 1,
+                                        blurRadius: 2,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: GestureDetector(
+                                    child: Icon(
+                                      Icons.remove,
+                                      color: teal,
+                                    ),
+                                    onTap: () {
+                                      print(
+                                          '${menuItem.name} is deactivated..');
+                                      _db.deactivateMenuItem(menuItem.id);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),

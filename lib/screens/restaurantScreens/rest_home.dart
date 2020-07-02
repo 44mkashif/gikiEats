@@ -30,6 +30,7 @@ class _HomeState extends State<RestaurantHome> {
         centerTitle: true,
         backgroundColor: teal,
       ),
+      backgroundColor: white,
       body: StreamBuilder(
         stream: _db.restaurantData,
         builder: (context, snapshot) {
@@ -56,7 +57,7 @@ class _HomeState extends State<RestaurantHome> {
                               '${restaurant.image}',
                               height: 200,
                               width: double.infinity,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                           ),

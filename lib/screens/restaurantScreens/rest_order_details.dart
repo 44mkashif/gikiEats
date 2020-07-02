@@ -35,6 +35,7 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
           centerTitle: true,
           backgroundColor: Colors.teal[300],
         ),
+        backgroundColor: white,
         body: StreamBuilder(
           stream: _db.menuItemDataForOrderDetails,
           builder: (context, snapshot) {
@@ -258,7 +259,7 @@ class _OrderDetailState extends State<RestaurantOrderDetails> {
       margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
       elevation: 4,
       shadowColor: grey,
-      color: offwhite,
+      color: Colors.grey[50],
       child: InkWell(
         splashColor: teal.withOpacity(0.3),
         child: Container(
