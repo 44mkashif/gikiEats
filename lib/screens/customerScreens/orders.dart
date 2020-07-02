@@ -4,6 +4,7 @@ import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/loader.dart';
 import 'package:giki_eats/utils/variables.dart';
+import 'package:intl/intl.dart';
 
 class MyOrders extends StatelessWidget {
   final String userId;
@@ -16,49 +17,52 @@ class MyOrders extends StatelessWidget {
     print('userId $userId');
     DatabaseService _db = DatabaseService(userId: userId);
     return Scaffold(
+        body: NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          SliverAppBar(
+            expandedHeight: 200.0,
+            floating: false,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text("My Orders",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                  )),
+              background: Image.asset(
+                "images/ordersPageImage.jpg",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ];
+      },
       body: StreamBuilder(
         stream: _db.ordersDataForUser,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             orders = snapshot.data;
-            return NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverAppBar(
-                    expandedHeight: 200.0,
-                    floating: false,
-                    pinned: true,
-                    flexibleSpace: FlexibleSpaceBar(
-                      centerTitle: true,
-                      title: Text("My Orders",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          )),
-                      background: Image.asset(
-                        "images/ordersPageImage.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ];
-              },
-              body: Container(
-                child: ListView.builder(
-                  itemCount: orders.length,
-                  itemBuilder: (context, index) {
-                    return orderContainer(orders[index]);
-                  },
-                ),
+            return Container(
+              child: ListView.builder(
+                itemCount: orders.length,
+                itemBuilder: (context, index) {
+                  return orderContainer(orders[index]);
+                },
               ),
+            );
+          } else if (!snapshot.hasData) {
+            return Container(
+              alignment: Alignment.center,
+              child: Text('Empty'),
             );
           } else {
             return Loading();
           }
         },
       ),
-    );
+    ));
   }
 
   Widget orderContainer(Order order) {
@@ -79,40 +83,47 @@ class MyOrders extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     ListTile(
-                        isThreeLine: true,
-                        contentPadding: const EdgeInsets.all(5),
-                        title: Text(
-                          restaurant.name,
-                          style: TextStyle(color: white, fontSize: 20),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(height: 10),
-                            Text(
-                              'Items: ' + itemsQty(order).toString(),
-                              style: TextStyle(color: white, fontSize: 16),
+                      isThreeLine: true,
+                      contentPadding: const EdgeInsets.all(5),
+                      title: Text(
+                        restaurant.name,
+                        style: TextStyle(color: white, fontSize: 20),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 10),
+                          Text(
+                            'Items: ' + itemsQty(order).toString(),
+                            style: TextStyle(color: white, fontSize: 16),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Total: Rs.' + order.total.toString(),
+                            style: TextStyle(color: white, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      trailing: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            order.status,
+                            style: TextStyle(color: white),
+                          ),
+                          Text(
+                            DateFormat.yMd()
+                                .add_jm()
+                                .format(order.orderedOn.toDate()),
+                            style: TextStyle(
+                              color: white,
+                              fontSize: 12,
                             ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Total: Rs.' + order.total.toString(),
-                              style: TextStyle(color: white, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                        trailing: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                order.status,
-                                style: TextStyle(color: white),
-                              ),
-                              SizedBox(height: 20),
-                              Text(
-                                order.orderedOn.toDate().toLocal().toString(),
-                                style: TextStyle(color: white, fontSize: 12),
-                              )
-                            ]))
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 elevation: 5,

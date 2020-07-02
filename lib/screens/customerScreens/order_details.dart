@@ -5,6 +5,7 @@ import 'package:giki_eats/models/restaurant.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/loader.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetails extends StatefulWidget {
   final Order order;
@@ -307,7 +308,7 @@ class _OrderDetailState extends State<OrderDetails> {
                 text: 'Accepted On: ',
                 style: TextStyle(fontWeight: FontWeight.w400, color: teal)),
             new TextSpan(
-                text: widget.order.acceptedOn.toDate().toString(),
+                text: DateFormat.yMd().add_jm().format(widget.order.acceptedOn.toDate()),
                 style: TextStyle(color: Colors.black54)),
           ]));
     } else {
@@ -322,7 +323,7 @@ class _OrderDetailState extends State<OrderDetails> {
                 text: 'Ordered On: ',
                 style: TextStyle(fontWeight: FontWeight.w400, color: teal)),
             new TextSpan(
-                text: widget.order.orderedOn.toDate().toString(),
+                text: DateFormat.yMd().add_jm().format(widget.order.orderedOn.toDate()),
                 style: TextStyle(color: Colors.black54)),
           ]));
     }

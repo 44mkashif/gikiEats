@@ -146,7 +146,7 @@ class RestaurantInfo extends StatelessWidget {
                                     width: 15,
                                   ),
                                   Text(
-                                    'Rs. ${restaurant.deliveryFee} per delivery',
+                                    'Delivery fee: Rs. ${restaurant.deliveryFee}',
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,

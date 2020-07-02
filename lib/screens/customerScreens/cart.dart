@@ -5,6 +5,7 @@ import 'package:giki_eats/models/order.dart';
 import 'package:giki_eats/services/database.dart';
 import 'package:giki_eats/utils/colors.dart';
 import 'package:giki_eats/utils/variables.dart';
+import 'package:giki_eats/screens/customerScreens/empty_cart.dart';
 
 class Cart extends StatefulWidget {
   final CartItem cartItem;
@@ -25,16 +26,7 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     
     if (cart.isEmpty && widget.cartItem == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Cart'),
-          centerTitle: true,
-        ),
-        body: Container(
-          alignment: Alignment.center,
-          child: Text('Your cart is empty'),
-        ),
-      );
+      return EmptyCart();
     } else {
       menuIds = [];
       menuQty = [];
@@ -51,6 +43,7 @@ class _CartState extends State<Cart> {
       }
 
       //Calculate Total Amount
+      _total = 0;
       for (var cartItem in cart) {
         _total += cartItem.total;
       }
@@ -212,13 +205,13 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
         children: <Widget>[
           Container(
             child: CircleAvatar(
-              radius: 55,
+              radius: 50,
               backgroundColor: teal,
               child: CircleAvatar(
-                radius: 52,
+                radius: 48,
                 backgroundColor: white,
                 child: CircleAvatar(
-                  radius: 50,
+                  radius: 45,
                   backgroundImage: NetworkImage(cartItem.menuItem.image),
                 ),
               ),
@@ -236,7 +229,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: teal,
                   ),
@@ -249,7 +242,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -260,7 +253,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   'Quantity: ${cartItem.quantity}',
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -272,7 +265,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

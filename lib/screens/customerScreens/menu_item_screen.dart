@@ -98,7 +98,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                       ),
                     ),
                     child: Container(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 10),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
                       child: ListView(
                         children: <Widget>[
                           Column(
@@ -124,11 +124,14 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                               SizedBox(
                                 height: 15,
                               ),
-                              Text(
-                                menuItem.description,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 16,
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                child: Text(
+                                  menuItem.description,
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -155,7 +158,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                   Container(
                                     margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                                     height: 60.0,
-                                    width: 250,
+                                    width: 280,
                                     child: RaisedButton(
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -213,7 +216,7 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                         "Add $quantity item/s to cart",
                                         style: TextStyle(
                                           color: white,
-                                          fontSize: 20,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
