@@ -93,23 +93,21 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                             height: 20,
                           ),
                           Container(
-                            
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: Container(
-                              
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.attach_money),
-                                labelText: 'Price',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(100),
+                                  prefixIcon: Icon(Icons.attach_money),
+                                  labelText: 'Price',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(100),
+                                    ),
                                   ),
                                 ),
-                              ),
                                 keyboardType: TextInputType.number,
                                 onSaved: (input) => _price = int.parse(input),
                               ),
@@ -119,23 +117,21 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                             height: 20,
                           ),
                           Container(
-                            
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
                               borderRadius: BorderRadius.circular(100),
                             ),
                             child: Container(
-                              
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.text_fields),
-                                labelText: 'Description',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(100),
+                                  prefixIcon: Icon(Icons.text_fields),
+                                  labelText: 'Description',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(100),
+                                    ),
                                   ),
                                 ),
-                              ),
                                 keyboardType: TextInputType.text,
                                 onSaved: (input) => _description = input,
                               ),
@@ -145,6 +141,7 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                             height: 20,
                           ),
                           Container(
+                            height: 60,
                             padding: EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
@@ -153,29 +150,39 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                                 color: Colors.grey,
                               ),
                             ),
-                            // child: Container(
-                              // padding: const EdgeInsets.all(8.0),
-                              child: DropdownButton(
-                                hint: Text('Choose Category'),
-                                underline:
-                                    SizedBox(), // remove underline border
-                                isExpanded:
-                                    true, // put arrow icons to right most
-                                value: _category,
-                                onChanged: (newInput) {
-                                  setState(() {
-                                    _category = newInput;
-                                    print('loc: $_category');
-                                  });
-                                },
-                                items: _locations.map((loc) {
-                                  return DropdownMenuItem(
-                                    child: Text(loc),
-                                    value: loc,
-                                  );
-                                }).toList(),
-                              ),
-                            // ),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.category,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: DropdownButton(
+                                    hint: Text('Choose Category'),
+                                    underline:
+                                        SizedBox(), // remove underline border
+                                    isExpanded:
+                                        true, // put arrow icons to right most
+                                    value: _category,
+                                    onChanged: (newInput) {
+                                      setState(() {
+                                        _category = newInput;
+                                        print('loc: $_category');
+                                      });
+                                    },
+                                    items: _locations.map((loc) {
+                                      return DropdownMenuItem(
+                                        child: Text(loc),
+                                        value: loc,
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 20,
@@ -194,7 +201,10 @@ class _CreateMenuItemState extends State<CreateMenuItem> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   IconButton(
-                                    icon: Icon(Icons.camera),
+                                    icon: Icon(
+                                      Icons.camera,
+                                      color: Colors.grey,
+                                    ),
                                     iconSize: 25,
                                     onPressed: () {
                                       getImage();
