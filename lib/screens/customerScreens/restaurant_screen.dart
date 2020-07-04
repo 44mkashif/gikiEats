@@ -189,38 +189,13 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                     radius: 55,
                     backgroundColor: teal,
                     child: CircleAvatar(
-                        radius: 52,
-                        backgroundColor: white,
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(menuItem.image),
-                        )
-                        // FutureBuilder(
-                        //   future: downloadImage(menuItem.image),
-                        //   builder: (BuildContext context, snapshot) {
-                        //     print('snap: ${snapshot.data}');
-                        //     if (snapshot.hasData) {
-                        //       return CircleAvatar(
-                        //         radius: 50,
-                        //         backgroundImage: NetworkImage(snapshot.data),
-                        //       );
-                        //     } else {
-                        //       String image;
-                        //       if(menuItem.category == 'Desi'){
-                        //         image = 'desi_food.jpg';
-                        //       } else if(menuItem.category == 'Fast Food'){
-                        //         image = 'fast_food.png';
-                        //       } else if(menuItem.category == 'Chinese'){
-                        //         image = 'chinese_food.jpg';
-                        //       }
-                        //       return CircleAvatar(
-                        //         radius: 50,
-                        //         backgroundImage: AssetImage('images/$image'),
-                        //       );
-                        //     }
-                        //   },
-                        // ),
-                        ),
+                      radius: 52,
+                      backgroundColor: white,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: NetworkImage(menuItem.image),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -241,18 +216,6 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                         color: teal,
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
-                    // Text(
-                    //   menuItem.description,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   maxLines: 1,
-                    //   textAlign: TextAlign.start,
-                    //   style: TextStyle(
-                    //     fontSize: 15,
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 10,
                     ),
@@ -274,13 +237,6 @@ class _RestaurantScreenState extends State<RestaurantScreen>
       ),
     );
   }
-
-  // Future downloadImage(String imageUrl) async {
-  //   FirebaseStorage storage = FirebaseStorage.instance;
-  //   StorageReference reference = await storage.getReferenceFromUrl(imageUrl);
-  //   String downloadUrl = await reference.getDownloadURL();
-  //   return downloadUrl;
-  // }
 }
 
 class Delegate extends SliverPersistentHeaderDelegate {

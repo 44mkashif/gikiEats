@@ -75,15 +75,18 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                   alignment: Alignment.center,
-                  child: CircleAvatar(
-                    radius: 105,
-                    backgroundColor: white,
+                  child: Hero(
+                    tag: menuItem.name,
                     child: CircleAvatar(
-                      radius: 103,
-                      backgroundColor: teal,
+                      radius: 105,
+                      backgroundColor: white,
                       child: CircleAvatar(
-                        radius: 100,
-                        backgroundImage: NetworkImage(menuItem.image),
+                        radius: 103,
+                        backgroundColor: teal,
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundImage: NetworkImage(menuItem.image),
+                        ),
                       ),
                     ),
                   ),
@@ -125,7 +128,8 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                 height: 15,
                               ),
                               Container(
-                                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 10),
                                 child: Text(
                                   menuItem.description,
                                   textAlign: TextAlign.justify,
@@ -191,8 +195,10 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                         } else {
                                           for (var cartitem in cart) {
                                             if (isUnique) {
-                                              if (cartitem.menuItem.id == cartItem.menuItem.id) {
-                                                int index = cart.indexOf(cartitem);
+                                              if (cartitem.menuItem.id ==
+                                                  cartItem.menuItem.id) {
+                                                int index =
+                                                    cart.indexOf(cartitem);
                                                 cart[index] = cartItem;
                                                 isUnique = false;
                                               } else {
@@ -207,7 +213,8 @@ class _MenuItemScreenState extends State<MenuItemScreen> {
                                         _key.currentState.showSnackBar(
                                           SnackBar(
                                             content: Text("Added to Cart!"),
-                                            duration: const Duration(milliseconds: 1000),
+                                            duration: const Duration(
+                                                milliseconds: 1000),
                                           ),
                                         );
                                       },

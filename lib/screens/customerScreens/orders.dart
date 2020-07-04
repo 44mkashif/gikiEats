@@ -46,6 +46,8 @@ class MyOrders extends StatelessWidget {
             if (snapshot.hasData) {
               print(snapshot.data);
               orders = snapshot.data;
+              if(orders.isEmpty)
+                return emptyOrders();
               return Container(
                 child: ListView.builder(
                   itemCount: orders.length,
@@ -55,10 +57,7 @@ class MyOrders extends StatelessWidget {
                 ),
               );
             } else if (!snapshot.hasData) {
-              return Container(
-                alignment: Alignment.center,
-                child: Text('Empty'),
-              );
+              return emptyOrders();
             } else {
               return Loading();
             }
@@ -142,6 +141,42 @@ class MyOrders extends StatelessWidget {
           return Loading();
         }
       },
+    );
+  }
+
+  Widget emptyOrders() {
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            child: Image.asset(
+              'images/empty_cart.png',
+              height: 260,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'No orders yet',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: teal,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(80, 10, 80, 10),
+            child: Text(
+              'Looks like you haven\'t ordered anything yet...',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

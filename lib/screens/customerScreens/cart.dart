@@ -249,7 +249,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
                 SizedBox(
@@ -260,7 +260,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
                 SizedBox(
@@ -271,7 +271,7 @@ Widget menuItemContainer(BuildContext context, CartItem cartItem) {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
